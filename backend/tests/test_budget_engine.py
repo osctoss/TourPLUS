@@ -85,3 +85,4 @@ class BudgetLedgerEngineTests(TestCase):
         self.assertTrue(summary['is_over_budget'])
         self.assertGreater(summary['shortfall'], decimal.Decimal('0.00'))
         self.assertEqual(summary['spendable_tourism_budget'], decimal.Decimal('0.00'))
+

@@ -1,4 +1,3 @@
-import decimal
 from django.test import TestCase
 from django.contrib.auth import get_user_model
 from django.core.management import call_command
@@ -6,7 +5,6 @@ from rest_framework.test import APIClient
 from apps.medical.models import Specialty, TreatmentCategory
 from apps.tourism.models import DestinationCategory, TouristDestination
 from apps.trip_planning.models import TripRequest
-from apps.final_plans.models import FinalPlan
 
 User = get_user_model()
 
@@ -99,3 +97,4 @@ class EndToEndPlanningJourneyTests(TestCase):
         self.assertIn('disclaimers', export_data)
         self.assertIn('medical_safety', export_data['disclaimers'])
         self.assertIn('package_inclusion_credit', export_data['financial_ledger'])
+

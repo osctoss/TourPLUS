@@ -1,10 +1,9 @@
 import decimal
-from typing import List, Dict, Any, Optional
+from typing import List, Dict, Any
 from apps.recommendations.models import (
     HospitalScenario,
     PackageMatch,
-    PackageMatchInclusionCredit,
-    ScenarioBudgetLine
+    PackageMatchInclusionCredit
 )
 from apps.packages.models import TravelPackage, PackageInclusion
 from integrations.exchange_rates.converter import CurrencyConverter

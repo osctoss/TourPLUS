@@ -87,3 +87,4 @@ class TourismEngineTests(TestCase):
         # Low/moderate intensity destinations should be FEASIBLE
         feasible_recs = [r for r in created if r.feasibility_status == DestinationRecommendation.Feasibility.FEASIBLE]
         self.assertGreater(len(feasible_recs), 0)
+

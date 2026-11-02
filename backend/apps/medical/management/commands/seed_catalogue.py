@@ -643,3 +643,4 @@ class Command(BaseCommand):
         self.stdout.write(f"  - Travel Agencies: {TravelAgency.objects.count()}")
         self.stdout.write(f"  - Travel Packages: {TravelPackage.objects.count()}")
         self.stdout.write(f"  - Package Inclusions: {PackageInclusion.objects.count()}")
+

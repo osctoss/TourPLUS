@@ -5,7 +5,7 @@ from django.core.management import call_command
 from apps.medical.models import Specialty, TreatmentCategory
 from apps.hospitals.models import HospitalTreatmentOffering
 from apps.trip_planning.models import TripRequest
-from apps.recommendations.models import RecommendationRun, HospitalScenario, PackageMatch
+from apps.recommendations.models import RecommendationRun, HospitalScenario
 from engines.budgeting.ledger import BudgetLedgerEngine
 from engines.tourism.recommender import TourismRecommendationEngine
 from engines.package_matching.matcher import PackageMatchingEngine
@@ -67,3 +67,4 @@ class PackageMatchingEngineTests(TestCase):
                 self.assertGreater(cr.credited_amount, decimal.Decimal('0.00'))
                 self.assertTrue(len(cr.credit_reason) > 0)
                 self.assertEqual(cr.scenario_budget_line.hospital_scenario, scenario)
+

@@ -36,3 +36,8 @@ class HospitalScenarioAdmin(admin.ModelAdmin):
     list_filter = ('eligibility_status', 'scenario_currency')
     inlines = [ScenarioBudgetLineInline, DestinationRecommendationInline, PackageMatchInline]
 
+
+@admin.register(PackageMatchInclusionCredit)
+class PackageMatchInclusionCreditAdmin(admin.ModelAdmin):
+    list_display = ('id', 'package_match', 'package_inclusion', 'credited_amount', 'credited_currency')
+

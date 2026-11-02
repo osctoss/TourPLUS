@@ -4,7 +4,6 @@ from django.contrib.auth import get_user_model
 from django.core.management import call_command
 from rest_framework.test import APIClient
 from apps.medical.models import Specialty, TreatmentCategory
-from apps.hospitals.models import Hospital, HospitalTreatmentOffering
 from apps.trip_planning.models import TripRequest
 from engines.hospitals.ranking import HospitalRankingEngine
 

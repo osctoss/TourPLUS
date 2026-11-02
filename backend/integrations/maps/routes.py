@@ -55,3 +55,4 @@ class RouteEngine:
         duration_minutes = max(15, int(round(duration_hours * 60)))
 
         return round(dist_km, 1), duration_minutes
+

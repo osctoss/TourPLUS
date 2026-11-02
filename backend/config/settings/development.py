@@ -3,7 +3,6 @@ Development Settings for TourPlus AI
 """
 
 import os
-from pathlib import Path
 from urllib.parse import urlparse
 from .base import *
 

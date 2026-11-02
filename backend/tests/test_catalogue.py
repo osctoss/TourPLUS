@@ -1,10 +1,6 @@
 from django.test import TestCase
 from django.urls import reverse
 from rest_framework import status
-from apps.medical.models import Specialty
-from apps.hospitals.models import Hospital
-from apps.tourism.models import TouristDestination
-from apps.packages.models import TravelPackage
 
 
 class CatalogueApiTest(TestCase):

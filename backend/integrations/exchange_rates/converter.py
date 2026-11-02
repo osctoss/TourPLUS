@@ -1,5 +1,4 @@
 import decimal
-from typing import Optional
 from apps.geography.models import ExchangeRate
 
 
@@ -50,3 +49,4 @@ class CurrencyConverter:
         rate = CurrencyConverter.get_rate(from_currency, to_currency)
         converted = (decimal.Decimal(str(amount)) * rate).quantize(decimal.Decimal('0.01'), rounding=decimal.ROUND_HALF_UP)
         return converted
+

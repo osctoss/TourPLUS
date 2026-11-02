@@ -1,6 +1,6 @@
 import decimal
 from typing import List, Dict, Any, Tuple
-from apps.hospitals.models import Hospital, HospitalTreatmentOffering, VerificationStatus, DataClassification
+from apps.hospitals.models import Hospital, HospitalTreatmentOffering, VerificationStatus
 
 
 class HospitalRankingEngine:

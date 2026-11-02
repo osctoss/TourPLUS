@@ -1,6 +1,6 @@
 import decimal
 import math
-from typing import Dict, Any, List
+from typing import Dict, Any
 from apps.recommendations.models import HospitalScenario, ScenarioBudgetLine
 from apps.trip_planning.models import TripRequest
 from apps.hospitals.models import DataClassification
@@ -216,3 +216,4 @@ class BudgetLedgerEngine:
             'shortfall': shortfall,
             'line_count': len(created_lines)
         }
+

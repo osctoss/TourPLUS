@@ -1,6 +1,5 @@
 from rest_framework import serializers
 from .models import TripRequest, TripRequestInterest
-from apps.tourism.serializers import DestinationCategorySerializer
 
 
 class TripRequestInterestSerializer(serializers.ModelSerializer):

@@ -1,6 +1,6 @@
 import os
 import re
-from typing import Dict, Any, List
+from typing import List
 
 
 class LLMAdvisor:
@@ -59,3 +59,4 @@ class LLMAdvisor:
             f"specifically for {offering_name} (Composite Match Score: {score:.2f}). "
             f"This scenario {budget_phrase} and features accredited international patient coordination."
         )
+

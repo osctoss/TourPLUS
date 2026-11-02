@@ -7,6 +7,17 @@
     "./backend"
   ],
   "venvPath": "backend",
-  "venv": ".venv"
+  "venv": ".venv",
+  "executionEnvironments": [
+    {
+      "root": "backend",
+      "extraPaths": [
+        ".",
+        "apps",
+        "engines",
+        "integrations",
+        "common"
+      ]
+    }
+  ]
 }
-

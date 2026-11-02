@@ -1,11 +1,9 @@
-from rest_framework import viewsets, permissions, status
+from rest_framework import viewsets, permissions
 from rest_framework.decorators import action
 from rest_framework.response import Response
 from .models import (
     RecommendationRun,
-    HospitalScenario,
-    DestinationRecommendation,
-    PackageMatch
+    HospitalScenario
 )
 from .serializers import (
     RecommendationRunSerializer,

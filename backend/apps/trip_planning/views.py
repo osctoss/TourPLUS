@@ -3,7 +3,7 @@ from rest_framework import viewsets, permissions, status
 from rest_framework.decorators import action
 from rest_framework.response import Response
 from django.utils import timezone
-from .models import TripRequest, TripRequestInterest
+from .models import TripRequest
 from .serializers import TripRequestSerializer
 from apps.recommendations.models import RecommendationRun, HospitalScenario
 from apps.recommendations.serializers import RecommendationRunSerializer
