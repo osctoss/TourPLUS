@@ -1,5 +1,5 @@
 import decimal
-from typing import List, Dict, Any, Tuple
+from typing import List, Dict, Any, Tuple, Optional
 from apps.hospitals.models import Hospital, HospitalTreatmentOffering, VerificationStatus
 
 
@@ -14,7 +14,7 @@ class HospitalRankingEngine:
        HScore = 0.45*T + 0.20*C + 0.15*I + 0.10*G + 0.10*V
     """
 
-    def __init__(self, weights: Dict[str, float] = None):
+    def __init__(self, weights: Optional[Dict[str, float]] = None):
         self.weights = weights or {
             'treatment_match': 0.45,
             'cost_suitability': 0.20,
@@ -25,10 +25,10 @@ class HospitalRankingEngine:
 
     def evaluate_candidates(
         self,
-        specialty_id: str,
-        treatment_category_id: str = None,
+        specialty_id: Optional[str] = None,
+        treatment_category_id: Optional[str] = None,
         total_budget: decimal.Decimal = decimal.Decimal('0.00'),
-        preferred_city_id: str = None
+        preferred_city_id: Optional[str] = None
     ) -> Tuple[List[Dict[str, Any]], List[Dict[str, Any]]]:
         """
         Returns (eligible_ranked_scenarios, excluded_candidates)
@@ -76,7 +76,7 @@ class HospitalRankingEngine:
 
             # 2. Soft Criteria Scores (Normalized 0.0 - 1.0)
             # T: Treatment Offering Match (1.0 if exact category match)
-            t_score = 1.0 if (treatment_category_id and str(matched_offering.treatment_category_id) == str(treatment_category_id)) else 0.85
+            t_score = 1.0 if (treatment_category_id and str(matched_offering.treatment_category_id) == treatment_category_id) else 0.85
 
             # C: Cost Suitability (rewards affordability within budget)
             c_score = 0.5
@@ -93,7 +93,7 @@ class HospitalRankingEngine:
 
             # G: Geographic Suitability
             g_score = 0.8
-            if preferred_city_id and str(hospital.city_id) == str(preferred_city_id):
+            if preferred_city_id and str(hospital.city_id) == preferred_city_id:
                 g_score = 1.0
 
             # V: Verification and Completeness

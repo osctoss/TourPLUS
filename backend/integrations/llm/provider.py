@@ -1,6 +1,6 @@
 import os
 import re
-from typing import List
+from typing import List, Optional
 
 
 class LLMAdvisor:
@@ -12,7 +12,7 @@ class LLMAdvisor:
     Guarantees 100% platform availability even when LLM provider is offline.
     """
 
-    def __init__(self, api_key: str = None):
+    def __init__(self, api_key: Optional[str] = None):
         self.api_key = api_key or os.environ.get('GEMINI_API_KEY')
 
     def extract_clinical_keywords(self, doctor_notes: str) -> List[str]:

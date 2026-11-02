@@ -4,8 +4,12 @@
   ],
   "extraPaths": [
     "backend",
-    "./backend"
+    "backend/apps",
+    "backend/engines",
+    "backend/integrations",
+    "backend/.venv/Lib/site-packages"
   ],
+  "pythonPath": "backend/.venv/Scripts/python.exe",
   "venvPath": "backend",
   "venv": ".venv",
   "executionEnvironments": [
@@ -16,7 +20,8 @@
         "apps",
         "engines",
         "integrations",
-        "common"
+        "common",
+        ".venv/Lib/site-packages"
       ]
     }
   ]

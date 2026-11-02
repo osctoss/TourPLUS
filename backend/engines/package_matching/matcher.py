@@ -1,5 +1,5 @@
 import decimal
-from typing import List, Dict, Any
+from typing import List, Dict, Any, Optional
 from apps.recommendations.models import (
     HospitalScenario,
     PackageMatch,
@@ -20,7 +20,7 @@ class PackageMatchingEngine:
     Guarantees no double-counting of mandatory stay expenses.
     """
 
-    def __init__(self, weights: Dict[str, float] = None):
+    def __init__(self, weights: Optional[Dict[str, float]] = None):
         self.weights = weights or {
             'coverage': 0.45,
             'cost_efficiency': 0.20,
