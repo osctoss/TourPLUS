@@ -23,6 +23,8 @@ class FinalPlan(models.Model):
     created_at = models.DateTimeField(default=timezone.now)
     updated_at = models.DateTimeField(auto_now=True)
 
+    objects = models.Manager()
+
     class Meta:
         db_table = 'final_plans'
         ordering = ['-created_at']
@@ -39,6 +41,8 @@ class FinalPlanDestination(models.Model):
     planned_visit_date = models.DateField(null=True, blank=True)
     planned_duration_minutes = models.PositiveIntegerField(default=120)
     notes = models.TextField(blank=True)
+
+    objects = models.Manager()
 
     class Meta:
         db_table = 'final_plan_destinations'

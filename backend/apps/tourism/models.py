@@ -12,6 +12,8 @@ class DestinationCategory(models.Model):
     description = models.TextField(blank=True)
     is_active = models.BooleanField(default=True)
 
+    objects = models.Manager()
+
     class Meta:
         db_table = 'destination_categories'
         verbose_name_plural = 'Destination Categories'
@@ -57,6 +59,8 @@ class TouristDestination(models.Model):
     created_at = models.DateTimeField(default=timezone.now)
     updated_at = models.DateTimeField(auto_now=True)
 
+    objects = models.Manager()
+
     class Meta:
         db_table = 'tourist_destinations'
         ordering = ['name']
@@ -69,6 +73,8 @@ class DestinationCategoryLink(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     destination = models.ForeignKey(TouristDestination, on_delete=models.CASCADE)
     category = models.ForeignKey(DestinationCategory, on_delete=models.CASCADE)
+
+    objects = models.Manager()
 
     class Meta:
         db_table = 'destination_category_links'
@@ -100,6 +106,8 @@ class DestinationCostEstimate(models.Model):
     party_basis = models.CharField(max_length=20, choices=PartyBasis.choices, default=PartyBasis.PER_PERSON)
     source = models.ForeignKey(DataSource, on_delete=models.SET_NULL, null=True, blank=True)
     data_classification = models.CharField(max_length=20, choices=DataClassification.choices, default=DataClassification.INDICATIVE)
+
+    objects = models.Manager()
 
     class Meta:
         db_table = 'destination_cost_estimates'

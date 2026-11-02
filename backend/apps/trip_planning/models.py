@@ -60,6 +60,8 @@ class TripRequest(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
     submitted_at = models.DateTimeField(null=True, blank=True)
 
+    objects = models.Manager()
+
     class Meta:
         db_table = 'trip_requests'
         ordering = ['-created_at']
@@ -73,6 +75,8 @@ class TripRequestInterest(models.Model):
     trip_request = models.ForeignKey(TripRequest, on_delete=models.CASCADE, related_name='interests')
     destination_category = models.ForeignKey(DestinationCategory, on_delete=models.CASCADE)
     preference_weight = models.PositiveSmallIntegerField(default=3, help_text="Weight from 1 to 5")
+
+    objects = models.Manager()
 
     class Meta:
         db_table = 'trip_request_interests'

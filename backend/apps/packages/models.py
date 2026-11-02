@@ -54,6 +54,8 @@ class TravelPackage(models.Model):
     created_at = models.DateTimeField(default=timezone.now)
     updated_at = models.DateTimeField(auto_now=True)
 
+    objects = models.Manager()
+
     class Meta:
         db_table = 'travel_packages'
         verbose_name = 'Travel Package'
@@ -71,6 +73,8 @@ class PackageDestination(models.Model):
     sequence_order = models.PositiveIntegerField(default=1)
     planned_visit_duration = models.PositiveIntegerField(default=120, help_text="Duration in minutes")
     overnight_stay = models.BooleanField(default=False)
+
+    objects = models.Manager()
 
     class Meta:
         db_table = 'package_destinations'
@@ -114,6 +118,8 @@ class PackageInclusion(models.Model):
     )
 
     verification_status = models.CharField(max_length=20, choices=VerificationStatus.choices, default=VerificationStatus.VERIFIED)
+
+    objects = models.Manager()
 
     class Meta:
         db_table = 'package_inclusions'

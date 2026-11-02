@@ -11,6 +11,8 @@ class Country(models.Model):
     default_currency = models.CharField(max_length=3, default='USD')
     is_active = models.BooleanField(default=True)
 
+    objects = models.Manager()
+
     class Meta:
         db_table = 'countries'
         verbose_name_plural = 'Countries'
@@ -25,6 +27,8 @@ class State(models.Model):
     country = models.ForeignKey(Country, on_delete=models.CASCADE, related_name='states')
     name = models.CharField(max_length=100)
     code = models.CharField(max_length=10)
+
+    objects = models.Manager()
 
     class Meta:
         db_table = 'states'
@@ -42,6 +46,8 @@ class City(models.Model):
     latitude = models.DecimalField(max_digits=9, decimal_places=6, null=True, blank=True)
     longitude = models.DecimalField(max_digits=9, decimal_places=6, null=True, blank=True)
     is_active = models.BooleanField(default=True)
+
+    objects = models.Manager()
 
     class Meta:
         db_table = 'cities'
@@ -69,6 +75,8 @@ class DataSource(models.Model):
     accessed_at = models.DateTimeField(default=timezone.now)
     notes = models.TextField(blank=True)
 
+    objects = models.Manager()
+
     class Meta:
         db_table = 'data_sources'
         verbose_name = 'Data Source'
@@ -86,6 +94,8 @@ class ExchangeRate(models.Model):
     effective_at = models.DateTimeField(default=timezone.now)
     provider_name = models.CharField(max_length=100, default='Curated')
     source_url = models.URLField(max_length=500, blank=True)
+
+    objects = models.Manager()
 
     class Meta:
         db_table = 'exchange_rates'

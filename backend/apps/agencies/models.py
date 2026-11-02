@@ -23,6 +23,8 @@ class TravelAgency(models.Model):
     created_at = models.DateTimeField(default=timezone.now)
     updated_at = models.DateTimeField(auto_now=True)
 
+    objects = models.Manager()
+
     class Meta:
         db_table = 'travel_agencies'
         verbose_name_plural = 'Travel Agencies'

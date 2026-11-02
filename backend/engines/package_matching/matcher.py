@@ -3,7 +3,9 @@ from typing import List, Dict, Any, Optional
 from apps.recommendations.models import (
     HospitalScenario,
     PackageMatch,
-    PackageMatchInclusionCredit
+    PackageMatchInclusionCredit,
+    DestinationRecommendation,
+    ScenarioBudgetLine
 )
 from apps.packages.models import TravelPackage, PackageInclusion
 from integrations.exchange_rates.converter import CurrencyConverter
@@ -39,17 +41,19 @@ class PackageMatchingEngine:
         Calculates package matches, derives Dynamic Inclusion Credits, and persists results.
         """
         # Clear existing matches for idempotency
-        scenario.package_matches.all().delete()
+        PackageMatch.objects.filter(hospital_scenario=scenario).delete()
 
         recommended_dest_ids = set(
-            scenario.destinations.values_list('destination_id', flat=True)
+            DestinationRecommendation.objects.filter(
+                hospital_scenario=scenario
+            ).values_list('destination_id', flat=True)
         )
         total_rec_count = len(recommended_dest_ids)
 
         # Map budget lines by category for quick lookup
         budget_lines_by_category = {
             line.expense_category: line
-            for line in scenario.budget_lines.all()
+            for line in ScenarioBudgetLine.objects.filter(hospital_scenario=scenario)
         }
 
         published_packages = TravelPackage.objects.filter(
@@ -60,7 +64,7 @@ class PackageMatchingEngine:
         )
 
         matched_packages_data: List[Dict[str, Any]] = []
-        target_currency = scenario.scenario_currency or 'USD'
+        target_currency = str(scenario.scenario_currency or 'USD')
 
         for package in published_packages:
             pkg_dest_ids = set(
@@ -84,7 +88,7 @@ class PackageMatchingEngine:
 
             converted_pkg_price = CurrencyConverter.convert(
                 total_pkg_price,
-                package.currency,
+                str(package.currency),
                 target_currency
             )
 
@@ -108,9 +112,10 @@ class PackageMatchingEngine:
                 b_c = matching_budget_line.converted_expected_amount
                 # Service value of inclusion
                 if inc.service_value_amount and inc.service_value_amount > 0:
+                    inc_currency = str(inc.service_value_currency or package.currency or 'USD')
                     val_converted = CurrencyConverter.convert(
                         inc.service_value_amount * (party_size if inc.unit in ['person', 'ticket'] else 1),
-                        inc.service_value_currency or package.currency,
+                        inc_currency,
                         target_currency
                     )
                 else:

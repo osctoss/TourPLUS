@@ -43,6 +43,8 @@ class Hospital(models.Model):
     created_at = models.DateTimeField(default=timezone.now)
     updated_at = models.DateTimeField(auto_now=True)
 
+    objects = models.Manager()
+
     class Meta:
         db_table = 'hospitals'
         ordering = ['name']
@@ -57,6 +59,8 @@ class HospitalSpecialty(models.Model):
     specialty = models.ForeignKey(Specialty, on_delete=models.CASCADE, related_name='hospital_links')
     verification_status = models.CharField(max_length=20, choices=VerificationStatus.choices, default=VerificationStatus.VERIFIED)
     source = models.ForeignKey(DataSource, on_delete=models.SET_NULL, null=True, blank=True)
+
+    objects = models.Manager()
 
     class Meta:
         db_table = 'hospital_specialties'
@@ -82,6 +86,8 @@ class HospitalTreatmentOffering(models.Model):
     verification_status = models.CharField(max_length=20, choices=VerificationStatus.choices, default=VerificationStatus.VERIFIED)
     source = models.ForeignKey(DataSource, on_delete=models.SET_NULL, null=True, blank=True)
     last_verified_at = models.DateTimeField(default=timezone.now)
+
+    objects = models.Manager()
 
     class Meta:
         db_table = 'hospital_treatment_offerings'
@@ -113,6 +119,8 @@ class TreatmentCostEstimate(models.Model):
     source = models.ForeignKey(DataSource, on_delete=models.SET_NULL, null=True, blank=True)
     data_classification = models.CharField(max_length=20, choices=DataClassification.choices, default=DataClassification.INDICATIVE)
     last_verified_at = models.DateTimeField(default=timezone.now)
+
+    objects = models.Manager()
 
     class Meta:
         db_table = 'treatment_cost_estimates'

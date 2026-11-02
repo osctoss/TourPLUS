@@ -26,6 +26,8 @@ class RecommendationRun(models.Model):
     completed_at = models.DateTimeField(null=True, blank=True)
     error_message = models.TextField(blank=True)
 
+    objects = models.Manager()
+
     class Meta:
         db_table = 'recommendation_runs'
         ordering = ['-started_at']
@@ -48,6 +50,11 @@ class HospitalScenario(models.Model):
     ranking_score = models.DecimalField(max_digits=5, decimal_places=4, default=0.0000)
     scenario_currency = models.CharField(max_length=3, default='USD')
     scenario_notes = models.TextField(blank=True)
+
+    objects = models.Manager()
+    budget_lines: models.Manager = None  # type: ignore
+    destinations: models.Manager = None  # type: ignore
+    package_matches: models.Manager = None  # type: ignore
 
     class Meta:
         db_table = 'hospital_scenarios'
@@ -83,6 +90,8 @@ class ScenarioBudgetLine(models.Model):
     quantity = models.DecimalField(max_digits=8, decimal_places=2, default=1.00)
     unit = models.CharField(max_length=50, blank=True)
     data_classification = models.CharField(max_length=20, choices=DataClassification.choices, default=DataClassification.INDICATIVE)
+
+    objects = models.Manager()
 
     class Meta:
         db_table = 'scenario_budget_lines'
@@ -121,6 +130,8 @@ class DestinationRecommendation(models.Model):
     feasibility_status = models.CharField(max_length=30, choices=Feasibility.choices, default=Feasibility.FEASIBLE)
     explanation = models.TextField(blank=True)
 
+    objects = models.Manager()
+
     class Meta:
         db_table = 'destination_recommendations'
         ordering = ['hospital_scenario', 'tourism_scope', 'rank']
@@ -151,6 +162,8 @@ class PackageMatch(models.Model):
     overall_score = models.DecimalField(max_digits=5, decimal_places=4, default=0.0000)
     explanation = models.TextField(blank=True)
 
+    objects = models.Manager()
+
     class Meta:
         db_table = 'package_matches'
         ordering = ['hospital_scenario', 'rank']
@@ -167,6 +180,8 @@ class PackageMatchInclusionCredit(models.Model):
     credited_amount = models.DecimalField(max_digits=12, decimal_places=2)
     credited_currency = models.CharField(max_length=3, default='USD')
     credit_reason = models.TextField(blank=True)
+
+    objects = models.Manager()
 
     class Meta:
         db_table = 'package_match_inclusion_credits'

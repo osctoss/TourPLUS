@@ -27,9 +27,9 @@ class BudgetLedgerEngine:
         Returns a financial ledger summary.
         """
         # Clear existing budget lines for idempotency
-        scenario.budget_lines.all().delete()
+        ScenarioBudgetLine.objects.filter(hospital_scenario=scenario).delete()
 
-        target_currency = scenario.scenario_currency or trip_request.budget_currency or 'USD'
+        target_currency = str(scenario.scenario_currency or trip_request.budget_currency or 'USD')
         party_size = max(1, trip_request.party_size)
         stay_nights = max(3, trip_request.available_days)
         rooms_needed = math.ceil(party_size / 2)

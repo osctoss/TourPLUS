@@ -9,6 +9,8 @@ class Specialty(models.Model):
     description = models.TextField(blank=True)
     is_active = models.BooleanField(default=True)
 
+    objects = models.Manager()
+
     class Meta:
         db_table = 'specialties'
         verbose_name_plural = 'Specialties'
@@ -31,6 +33,8 @@ class TreatmentCategory(models.Model):
     description = models.TextField(blank=True)
     is_active = models.BooleanField(default=True)
     review_status = models.CharField(max_length=30, choices=ReviewStatus.choices, default=ReviewStatus.VERIFIED)
+
+    objects = models.Manager()
 
     class Meta:
         db_table = 'treatment_categories'
