@@ -16,8 +16,8 @@ class Specialty(models.Model):
         verbose_name_plural = 'Specialties'
         ordering = ['name']
 
-    def __str__(self):
-        return self.name
+    def __str__(self) -> str:
+        return str(self.name)
 
 
 class TreatmentCategory(models.Model):

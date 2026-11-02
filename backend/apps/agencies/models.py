@@ -30,6 +30,6 @@ class TravelAgency(models.Model):
         verbose_name_plural = 'Travel Agencies'
         ordering = ['name']
 
-    def __str__(self):
-        return self.name
+    def __str__(self) -> str:
+        return str(self.name)
 

@@ -103,6 +103,7 @@ class ExchangeRate(models.Model):
         verbose_name_plural = 'Exchange Rates'
         ordering = ['-effective_at']
 
-    def __str__(self):
-        return f"1 {self.base_currency} = {self.rate} {self.quote_currency} ({self.effective_at.date()})"
+    def __str__(self) -> str:
+        date_str = str(self.effective_at)[:10] if self.effective_at else ''
+        return f"1 {self.base_currency} = {self.rate} {self.quote_currency} ({date_str})"
 

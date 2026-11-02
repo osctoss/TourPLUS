@@ -19,8 +19,8 @@ class DestinationCategory(models.Model):
         verbose_name_plural = 'Destination Categories'
         ordering = ['name']
 
-    def __str__(self):
-        return self.name
+    def __str__(self) -> str:
+        return str(self.name)
 
 
 class TouristDestination(models.Model):

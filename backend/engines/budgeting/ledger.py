@@ -30,9 +30,12 @@ class BudgetLedgerEngine:
         ScenarioBudgetLine.objects.filter(hospital_scenario=scenario).delete()
 
         target_currency = str(scenario.scenario_currency or trip_request.budget_currency or 'USD')
-        party_size = max(1, trip_request.party_size)
-        stay_nights = max(3, trip_request.available_days)
-        rooms_needed = math.ceil(party_size / 2)
+        party_size: int = max(1, int(trip_request.party_size or 1))
+        stay_nights: int = max(3, int(trip_request.available_days or 14))
+        rooms_needed: int = math.ceil(party_size / 2)
+        party_size_dec = decimal.Decimal(str(party_size))
+        total_room_nights: int = stay_nights * rooms_needed
+        total_room_nights_dec = decimal.Decimal(str(total_room_nights))
 
         budget_lines_to_create = []
 
@@ -75,23 +78,23 @@ class BudgetLedgerEngine:
         flight_unit_min = decimal.Decimal('650.00')
         flight_unit_exp = decimal.Decimal('850.00')
         flight_unit_max = decimal.Decimal('1200.00')
-        f_min = CurrencyConverter.convert(flight_unit_min * party_size, 'USD', target_currency)
-        f_exp = CurrencyConverter.convert(flight_unit_exp * party_size, 'USD', target_currency)
-        f_max = CurrencyConverter.convert(flight_unit_max * party_size, 'USD', target_currency)
+        f_min = CurrencyConverter.convert(flight_unit_min * party_size_dec, 'USD', target_currency)
+        f_exp = CurrencyConverter.convert(flight_unit_exp * party_size_dec, 'USD', target_currency)
+        f_max = CurrencyConverter.convert(flight_unit_max * party_size_dec, 'USD', target_currency)
         flight_rate = CurrencyConverter.get_rate('USD', target_currency)
 
         budget_lines_to_create.append(ScenarioBudgetLine(
             hospital_scenario=scenario,
             expense_category=ScenarioBudgetLine.ExpenseCategory.INTERNATIONAL_FLIGHT,
             description=f"International Return Airfare ({party_size} traveler{'s' if party_size > 1 else ''})",
-            min_amount=flight_unit_min * party_size,
-            expected_amount=flight_unit_exp * party_size,
-            max_amount=flight_unit_max * party_size,
+            min_amount=flight_unit_min * party_size_dec,
+            expected_amount=flight_unit_exp * party_size_dec,
+            max_amount=flight_unit_max * party_size_dec,
             source_currency='USD',
             scenario_currency=target_currency,
             exchange_rate_snapshot=flight_rate,
             converted_expected_amount=f_exp,
-            quantity=decimal.Decimal(str(party_size)),
+            quantity=party_size_dec,
             unit='travelers',
             data_classification=DataClassification.INDICATIVE
         ))
@@ -101,24 +104,23 @@ class BudgetLedgerEngine:
         nightly_min = decimal.Decimal('55.00')
         nightly_exp = decimal.Decimal('75.00')
         nightly_max = decimal.Decimal('110.00')
-        total_room_nights = stay_nights * rooms_needed
-        h_min = CurrencyConverter.convert(nightly_min * total_room_nights, 'USD', target_currency)
-        h_exp = CurrencyConverter.convert(nightly_exp * total_room_nights, 'USD', target_currency)
-        h_max = CurrencyConverter.convert(nightly_max * total_room_nights, 'USD', target_currency)
+        h_min = CurrencyConverter.convert(nightly_min * total_room_nights_dec, 'USD', target_currency)
+        h_exp = CurrencyConverter.convert(nightly_exp * total_room_nights_dec, 'USD', target_currency)
+        h_max = CurrencyConverter.convert(nightly_max * total_room_nights_dec, 'USD', target_currency)
         hotel_rate = CurrencyConverter.get_rate('USD', target_currency)
 
         budget_lines_to_create.append(ScenarioBudgetLine(
             hospital_scenario=scenario,
             expense_category=ScenarioBudgetLine.ExpenseCategory.ACCOMMODATION,
             description=f"Medical & Recovery Lodging ({stay_nights} nights × {rooms_needed} room{'s' if rooms_needed > 1 else ''})",
-            min_amount=nightly_min * total_room_nights,
-            expected_amount=nightly_exp * total_room_nights,
-            max_amount=nightly_max * total_room_nights,
+            min_amount=nightly_min * total_room_nights_dec,
+            expected_amount=nightly_exp * total_room_nights_dec,
+            max_amount=nightly_max * total_room_nights_dec,
             source_currency='USD',
             scenario_currency=target_currency,
             exchange_rate_snapshot=hotel_rate,
             converted_expected_amount=h_exp,
-            quantity=decimal.Decimal(str(total_room_nights)),
+            quantity=total_room_nights_dec,
             unit='room_nights',
             data_classification=DataClassification.INDICATIVE
         ))
@@ -126,21 +128,21 @@ class BudgetLedgerEngine:
         # 4. Medical Visa & Government Processing (VC_s)
         # $80 per traveler
         visa_unit = decimal.Decimal('80.00')
-        v_exp = CurrencyConverter.convert(visa_unit * party_size, 'USD', target_currency)
+        v_exp = CurrencyConverter.convert(visa_unit * party_size_dec, 'USD', target_currency)
         v_rate = CurrencyConverter.get_rate('USD', target_currency)
 
         budget_lines_to_create.append(ScenarioBudgetLine(
             hospital_scenario=scenario,
             expense_category=ScenarioBudgetLine.ExpenseCategory.VISA,
             description=f"Medical Visa Application Fees ({party_size} traveler{'s' if party_size > 1 else ''})",
-            min_amount=visa_unit * party_size,
-            expected_amount=visa_unit * party_size,
-            max_amount=(visa_unit + decimal.Decimal('20.00')) * party_size,
+            min_amount=visa_unit * party_size_dec,
+            expected_amount=visa_unit * party_size_dec,
+            max_amount=(visa_unit + decimal.Decimal('20.00')) * party_size_dec,
             source_currency='USD',
             scenario_currency=target_currency,
             exchange_rate_snapshot=v_rate,
             converted_expected_amount=v_exp,
-            quantity=decimal.Decimal(str(party_size)),
+            quantity=party_size_dec,
             unit='visas',
             data_classification=DataClassification.INDICATIVE
         ))
@@ -189,10 +191,11 @@ class BudgetLedgerEngine:
         created_lines = ScenarioBudgetLine.objects.bulk_create(budget_lines_to_create)
 
         # Financial Ledger Summation
-        total_budget = trip_request.total_budget_amount or decimal.Decimal('0.00')
+        total_budget = decimal.Decimal(str(trip_request.total_budget_amount or '0.00'))
+        budget_currency = str(trip_request.budget_currency or 'USD')
         converted_total_budget = CurrencyConverter.convert(
             total_budget,
-            trip_request.budget_currency or 'USD',
+            budget_currency,
             target_currency
         )
 

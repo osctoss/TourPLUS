@@ -12,6 +12,7 @@
   "pythonPath": "backend/.venv/Scripts/python.exe",
   "venvPath": "backend",
   "venv": ".venv",
+  "stubPath": "backend/.venv/Lib/site-packages",
   "executionEnvironments": [
     {
       "root": "backend",

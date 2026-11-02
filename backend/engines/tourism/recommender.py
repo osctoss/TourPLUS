@@ -1,7 +1,7 @@
 import decimal
-from typing import List, Dict, Any
+from typing import List, Dict, Any, Optional
 from apps.recommendations.models import HospitalScenario, DestinationRecommendation
-from apps.trip_planning.models import TripRequest
+from apps.trip_planning.models import TripRequest, TripRequestInterest
 from apps.tourism.models import TouristDestination
 from apps.hospitals.models import VerificationStatus
 from integrations.maps.routes import RouteEngine
@@ -18,7 +18,7 @@ class TourismRecommendationEngine:
     Enforces medical recovery constraint boundaries and flags destinations for clinical review.
     """
 
-    def __init__(self, weights: Dict[str, float] = None):
+    def __init__(self, weights: Optional[Dict[str, float]] = None):
         self.weights = weights or {
             'interest': 0.40,
             'geography': 0.25,
@@ -44,7 +44,7 @@ class TourismRecommendationEngine:
 
         user_interests = {
             str(i.destination_category_id): i.preference_weight
-            for i in trip_request.interests.all()
+            for i in TripRequestInterest.objects.filter(trip_request=trip_request)
         }
 
         all_destinations = TouristDestination.objects.filter(
@@ -55,11 +55,16 @@ class TourismRecommendationEngine:
 
         for dest in all_destinations:
             # 1. Geographic Distance & 3-Tier Scope Classification
+            h_lat = float(str(hospital.latitude)) if hospital.latitude is not None else None
+            h_lon = float(str(hospital.longitude)) if hospital.longitude is not None else None
+            d_lat = float(str(dest.latitude)) if dest.latitude is not None else None
+            d_lon = float(str(dest.longitude)) if dest.longitude is not None else None
+
             dist_km, duration_mins = RouteEngine.estimate_route(
-                float(hospital.latitude) if hospital.latitude else None,
-                float(hospital.longitude) if hospital.longitude else None,
-                float(dest.latitude) if dest.latitude else None,
-                float(dest.longitude) if dest.longitude else None,
+                h_lat,
+                h_lon,
+                d_lat,
+                d_lon,
             )
 
             is_same_city = (dest.city_id == hospital_city.id) if hospital_city else False
