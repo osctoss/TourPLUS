@@ -17,7 +17,7 @@ class Specialty(models.Model):
         ordering = ['name']
 
     def __str__(self) -> str:
-        return str(self.name)
+        return self.name
 
 
 class TreatmentCategory(models.Model):

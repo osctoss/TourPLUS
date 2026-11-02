@@ -111,8 +111,8 @@ class TourismRecommendationEngine:
 
             # 4. Cost Suitability Score (C_s)
             entry_fee = dest.entry_fee_expected or decimal.Decimal('0.00')
-            target_curr = str(scenario.scenario_currency or 'USD')
-            converted_entry_fee = CurrencyConverter.convert(entry_fee, str(dest.currency), target_curr)
+            target_curr = scenario.scenario_currency or 'USD'
+            converted_entry_fee = CurrencyConverter.convert(entry_fee, dest.currency, target_curr)
             
             # Transit cost approximation
             transit_cost = decimal.Decimal(str(round(dist_km * 0.40, 2)))

@@ -19,7 +19,7 @@ class RecommendationRunViewSet(viewsets.ReadOnlyModelViewSet):
 
     def get_queryset(self):
         qs = RecommendationRun.objects.filter(trip_request__user=self.request.user).prefetch_related('scenarios')
-        trip_request_id = self.request.query_params.get('trip_request')
+        trip_request_id = self.request.GET.get('trip_request')
         if trip_request_id:
             qs = qs.filter(trip_request_id=trip_request_id)
         return qs

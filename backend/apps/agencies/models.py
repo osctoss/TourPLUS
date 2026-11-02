@@ -31,5 +31,5 @@ class TravelAgency(models.Model):
         ordering = ['name']
 
     def __str__(self) -> str:
-        return str(self.name)
+        return self.name
 

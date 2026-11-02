@@ -29,9 +29,9 @@ class BudgetLedgerEngine:
         # Clear existing budget lines for idempotency
         ScenarioBudgetLine.objects.filter(hospital_scenario=scenario).delete()
 
-        target_currency = str(scenario.scenario_currency or trip_request.budget_currency or 'USD')
-        party_size: int = max(1, int(trip_request.party_size or 1))
-        stay_nights: int = max(3, int(trip_request.available_days or 14))
+        target_currency = scenario.scenario_currency or trip_request.budget_currency or 'USD'
+        party_size: int = max(1, trip_request.party_size or 1)
+        stay_nights: int = max(3, trip_request.available_days or 14)
         rooms_needed: int = math.ceil(party_size / 2)
         party_size_dec = decimal.Decimal(str(party_size))
         total_room_nights: int = stay_nights * rooms_needed
@@ -192,7 +192,7 @@ class BudgetLedgerEngine:
 
         # Financial Ledger Summation
         total_budget = decimal.Decimal(str(trip_request.total_budget_amount or '0.00'))
-        budget_currency = str(trip_request.budget_currency or 'USD')
+        budget_currency = trip_request.budget_currency or 'USD'
         converted_total_budget = CurrencyConverter.convert(
             total_budget,
             budget_currency,
