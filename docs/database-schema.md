@@ -48,3 +48,4 @@ erDiagram
 | `destination_recommendations` | Recommendations | Recommended attractions across 3 tiers. |
 | `package_matches` | Recommendations | Matched agency packages with effective cost. |
 | `final_plans` | Final Plans | Saved user itinerary and selected package. |
+

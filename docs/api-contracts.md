@@ -36,3 +36,4 @@ Base URL: `/api/v1/`
 - `POST /api/v1/final-plans/`: Persist patient's selected hospital scenario, chosen package, and destination sequence.
 - `GET /api/v1/final-plans/{id}/`: Retrieve full final plan.
 - `GET /api/v1/final-plans/{id}/export/`: Render printable export payload.
+

@@ -29,3 +29,4 @@ $$EPC_p = P_p - I_p$$
 
 - Double-counting prevention: Credits are strictly capped at the budgeted category line item ($B_c$).
 - Exclusions: Optional extras, sightseeing activities, and meals receive zero credit against mandatory costs.
+

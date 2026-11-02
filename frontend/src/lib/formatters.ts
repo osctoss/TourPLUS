@@ -23,3 +23,4 @@ export function formatDateShort(dateString: string | null | undefined): string {
     return dateString;
   }
 }
+

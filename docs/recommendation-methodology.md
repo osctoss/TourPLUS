@@ -37,3 +37,4 @@ $$DScore(d) = 0.40 I_s + 0.25 G_s + 0.20 C_s + 0.15 V_s$$
 - $G_s$: Proximity and transit duration score.
 - $C_s$: Entry and transit cost suitability.
 - $V_s$: Verification confidence.
+

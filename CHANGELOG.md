@@ -45,3 +45,4 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Deterministic fallback LLM provider abstraction for condition extraction and explanation.
   - Patient dashboard (`/dashboard`) for tracking past runs and saved plans.
   - Comprehensive automated test suite with 15 test cases passing.
+

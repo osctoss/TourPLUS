@@ -12,3 +12,4 @@
 ## 3. Disclaimers & Regulatory Protection
 - **Medical Disclaimer**: Placed prominently on the landing page, assessment wizard, scenario results, and printed final plan. Clearly states that TourPlus AI provides non-clinical decision support only and that treating clinicians must approve all medical travel and recovery plans.
 - **Financial Disclaimer**: Identifies indicative cost ranges and explains that actual hospital invoices depend on diagnostic evaluation upon arrival.
+

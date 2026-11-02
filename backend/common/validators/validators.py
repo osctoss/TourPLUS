@@ -10,3 +10,4 @@ def validate_positive_amount(value: decimal.Decimal) -> None:
 def validate_currency_code(code: str) -> None:
     if not code or len(code) != 3 or not code.isupper():
         raise ValidationError('Currency code must be a 3-letter ISO-4217 uppercase string.')
+

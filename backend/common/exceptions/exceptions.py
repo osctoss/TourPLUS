@@ -11,3 +11,4 @@ class FinancialCalculationError(DomainError):
 class ClinicianGuidanceRequiredError(DomainError):
     """Raised when an action requires explicit clinician clearance."""
     pass
+
