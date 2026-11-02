@@ -36,6 +36,7 @@ urlpatterns = [
     path('api/v1/health/', health_check, name='health-check'),
     path('api/v1/auth/', include('apps.accounts.urls')),
     path('api/v1/catalog/', include('apps.medical.urls')),
+    path('api/v1/hospitals/', include('apps.hospitals.urls')),
     path('api/v1/geo/', include('apps.geography.urls')),
     path('api/v1/tourism/', include('apps.tourism.urls')),
     path('api/v1/packages/', include('apps.packages.urls')),

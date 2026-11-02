@@ -296,193 +296,193 @@ gantt
 ### Phase 1: Domain Data Architecture, Admin Curation & Catalogue APIs
 **Goal:** Implement all persistent catalogue models, data provenance, Django Admin management, idempotent seeding for the 3 target specialties, and catalogue browsing.
 
-- [ ] **Task 1.1: Geography & Provenance Models (`apps.geography`, `apps.provenance`)**
-  - [ ] `countries` (id, name, iso2, iso3, default_currency, is_active).
-  - [ ] `states` (id, country_id, name, code).
-  - [ ] `cities` (id, state_id, name, latitude, longitude, location PostGIS point, is_active).
-  - [ ] `data_sources` (id, source_name, publisher, source_url, source_type, reliability_level, accessed_at).
-  - [ ] `exchange_rates` (id, base_currency, quote_currency, rate, effective_at, provider_name).
-- [ ] **Task 1.2: Medical & Hospital Models (`apps.medical`, `apps.hospitals`)**
-  - [ ] `specialties` (id, name, slug, description, is_active) -> Seeds: Cardiology, Orthopedics, Oncology.
-  - [ ] `treatment_categories` (id, specialty_id, name, slug, description, is_active, review_status).
-  - [ ] `hospitals` (id, name, slug, description, city_id, address, postal_code, latitude, longitude, location, website_url, international_patient_support, international_patient_details, verification_status, data_classification, source_id, last_verified_at, is_published).
-  - [ ] `hospital_specialties` (hospital_id, specialty_id, verification_status, source_id).
-  - [ ] `hospital_treatment_offerings` (hospital_id, treatment_category_id, offering_description, availability_status, verification_status, source_id, last_verified_at).
-  - [ ] `treatment_cost_estimates` (hospital_treatment_offering_id, min_amount, expected_amount, max_amount, currency, price_basis, included_services, excluded_services, valid_from, valid_until, data_classification).
-- [ ] **Task 1.3: Tourism Models (`apps.tourism`)**
-  - [ ] `destination_categories` (Heritage/History, Nature, Wildlife, Culture, Museums, Beaches, Spiritual, Modern, Food, Nightlife).
-  - [ ] `tourist_destinations` (id, name, slug, description, city_id, latitude, longitude, location, suggested_visit_duration_minutes, travel_intensity, accessibility_notes, opening_information, entry_fee_min/expected/max, currency, verification_status, data_classification, source_id, last_verified_at, is_published).
-  - [ ] `destination_category_links` (destination_id, category_id).
-  - [ ] `destination_cost_estimates` (destination_id, cost_type, min/expected/max amount, currency, party_basis).
-- [ ] **Task 1.4: Agency & Package Models (`apps.agencies`, `apps.packages`)**
-  - [ ] `travel_agencies` (id, name, slug, website_url, contact_email, headquarters_city_id, verification_status, data_classification, source_id, is_published).
-  - [ ] `travel_packages` (id, agency_id, name, description, package_type: LOCAL/STATE/NATIONAL/CUSTOM, duration_days, price_amount, currency, price_basis: PER_PERSON/PER_GROUP, min/max group size, valid_from/until, availability_status, verification_status, data_classification, is_published).
-  - [ ] `package_destinations` (package_id, destination_id, sequence_order, planned_visit_duration, overnight_stay).
-  - [ ] `package_inclusions` (package_id, inclusion_type, inclusion_status: INCLUDED/OPTIONAL_EXTRA/NOT_INCLUDED, description, quantity, unit, service_value_amount, service_value_currency, equivalent_budget_category: INTERNATIONAL_FLIGHT/ACCOMMODATION/LOCAL_TRANSPORT/VISA/MISCELLANEOUS).
-- [ ] **Task 1.5: Idempotent Seed Data Importers (`backend/seed/`)**
-  - [ ] Prepare curated datasets matching targets: 20-30 hospitals across 8-12 cities, 60-100 tourist destinations, 5-10 agencies, 10-20 packages.
-  - [ ] Build CLI script `python manage.py seed_catalogue` with strict idempotency (upsert by slug/natural key).
-  - [ ] Explicitly tag all records with data classification (`VERIFIED`, `INDICATIVE`, or `DEMO`).
-- [ ] **Task 1.6: Django Admin Dashboard**
-  - [ ] Register all catalogue models in Django Admin with customized list views, filters by verification status, search fields, and inline relationships.
-  - [ ] Add validation in Admin to prevent publishing records with unverified or missing required data.
-- [ ] **Task 1.7: Public Catalogue API Endpoints (`/api/v1/catalog/`, `/api/v1/hospitals/`, `/api/v1/destinations/`)**
-  - [ ] Implement read-only DRF ViewSets exposing published specialties, treatment categories, cities, hospitals, and destinations.
-  - [ ] Exclude sensitive internal data, non-published items, and unapproved records.
-- [ ] **Task 1.8: Authentication, Profile & Consent Implementation**
-  - [ ] Implement endpoints: `/auth/register/`, `/auth/login/`, `/auth/logout/`, `/auth/me/`, `/auth/forgot-password/`.
-  - [ ] Build Frontend Auth pages: Login, Register, Profile, Consent modal.
+- [x] **Task 1.1: Geography & Provenance Models (`apps.geography`, `apps.provenance`)**
+  - [x] `countries` (id, name, iso2, iso3, default_currency, is_active).
+  - [x] `states` (id, country_id, name, code).
+  - [x] `cities` (id, state_id, name, latitude, longitude, location PostGIS point, is_active).
+  - [x] `data_sources` (id, source_name, publisher, source_url, source_type, reliability_level, accessed_at).
+  - [x] `exchange_rates` (id, base_currency, quote_currency, rate, effective_at, provider_name).
+- [x] **Task 1.2: Medical & Hospital Models (`apps.medical`, `apps.hospitals`)**
+  - [x] `specialties` (id, name, slug, description, is_active) -> Seeds: Cardiology, Orthopedics, Oncology.
+  - [x] `treatment_categories` (id, specialty_id, name, slug, description, is_active, review_status).
+  - [x] `hospitals` (id, name, slug, description, city_id, address, postal_code, latitude, longitude, location, website_url, international_patient_support, international_patient_details, verification_status, data_classification, source_id, last_verified_at, is_published).
+  - [x] `hospital_specialties` (hospital_id, specialty_id, verification_status, source_id).
+  - [x] `hospital_treatment_offerings` (hospital_id, treatment_category_id, offering_description, availability_status, verification_status, source_id, last_verified_at).
+  - [x] `treatment_cost_estimates` (hospital_treatment_offering_id, min_amount, expected_amount, max_amount, currency, price_basis, included_services, excluded_services, valid_from, valid_until, data_classification).
+- [x] **Task 1.3: Tourism Models (`apps.tourism`)**
+  - [x] `destination_categories` (Heritage/History, Nature, Wildlife, Culture, Museums, Beaches, Spiritual, Modern, Food, Nightlife).
+  - [x] `tourist_destinations` (id, name, slug, description, city_id, latitude, longitude, location, suggested_visit_duration_minutes, travel_intensity, accessibility_notes, opening_information, entry_fee_min/expected/max, currency, verification_status, data_classification, source_id, last_verified_at, is_published).
+  - [x] `destination_category_links` (destination_id, category_id).
+  - [x] `destination_cost_estimates` (destination_id, cost_type, min/expected/max amount, currency, party_basis).
+- [x] **Task 1.4: Agency & Package Models (`apps.agencies`, `apps.packages`)**
+  - [x] `travel_agencies` (id, name, slug, website_url, contact_email, headquarters_city_id, verification_status, data_classification, source_id, is_published).
+  - [x] `travel_packages` (id, agency_id, name, description, package_type: LOCAL/STATE/NATIONAL/CUSTOM, duration_days, price_amount, currency, price_basis: PER_PERSON/PER_GROUP, min/max group size, valid_from/until, availability_status, verification_status, data_classification, is_published).
+  - [x] `package_destinations` (package_id, destination_id, sequence_order, planned_visit_duration, overnight_stay).
+  - [x] `package_inclusions` (package_id, inclusion_type, inclusion_status: INCLUDED/OPTIONAL_EXTRA/NOT_INCLUDED, description, quantity, unit, service_value_amount, service_value_currency, equivalent_budget_category: INTERNATIONAL_FLIGHT/ACCOMMODATION/LOCAL_TRANSPORT/VISA/MISCELLANEOUS).
+- [x] **Task 1.5: Idempotent Seed Data Importers (`backend/seed/`)**
+  - [x] Prepare curated datasets matching targets: 20-30 hospitals across 8-12 cities, 60-100 tourist destinations, 5-10 agencies, 10-20 packages.
+  - [x] Build CLI script `python manage.py seed_catalogue` with strict idempotency (upsert by slug/natural key).
+  - [x] Explicitly tag all records with data classification (`VERIFIED`, `INDICATIVE`, or `DEMO`).
+- [x] **Task 1.6: Django Admin Dashboard**
+  - [x] Register all catalogue models in Django Admin with customized list views, filters by verification status, search fields, and inline relationships.
+  - [x] Add validation in Admin to prevent publishing records with unverified or missing required data.
+- [x] **Task 1.7: Public Catalogue API Endpoints (`/api/v1/catalog/`, `/api/v1/hospitals/`, `/api/v1/destinations/`)**
+  - [x] Implement read-only DRF ViewSets exposing published specialties, treatment categories, cities, hospitals, and destinations.
+  - [x] Exclude sensitive internal data, non-published items, and unapproved records.
+- [x] **Task 1.8: Authentication, Profile & Consent Implementation**
+  - [x] Implement endpoints: `/auth/register/`, `/auth/login/`, `/auth/logout/`, `/auth/me/`, `/auth/forgot-password/`.
+  - [x] Build Frontend Auth pages: Login, Register, Profile, Consent modal.
 
 ---
 
 ### Phase 2: Patient Assessment Wizard & Hospital Scenarios
 **Goal:** Build the guided 6-step intake wizard with draft persistence, implement hospital filtering and ranking algorithms, and create independent hospital scenarios.
 
-- [ ] **Task 2.1: Trip Planning Domain Models (`apps.trip_planning`, `apps.recommendations`)**
-  - [ ] `trip_requests` (id, user_id, origin_country_id, specialty_id, treatment_category_id, known_condition_text, total_budget_amount, budget_currency, party_size, preferred_arrival_date, preferred_departure_date, available_days, recovery_duration_days, clinician_travel_guidance_status, clinician_restrictions, insurance_status, travel_intensity_preference, status: DRAFT/SUBMITTED/PROCESSING/COMPLETED/FAILED).
-  - [ ] `trip_request_interests` (trip_request_id, destination_category_id, preference_weight: 1-5).
-  - [ ] `recommendation_runs` (id, trip_request_id, run_number, status, algorithm_version, weight_configuration_snapshot, input_snapshot, started_at, completed_at, error_message).
-  - [ ] `hospital_scenarios` (id, recommendation_run_id, hospital_treatment_offering_id, rank, eligibility_status, exclusion_reason, ranking_score, scenario_currency).
-- [ ] **Task 2.2: Multi-Step Assessment Wizard UI (`/plan/new`)**
-  - [ ] **Step 1: Origin & Travel Details** (Country, party size, display currency, tentative dates/duration).
-  - [ ] **Step 2: Medical Requirement** (Specialty selection: Cardiology/Orthopedics/Oncology, treatment category dropdown, free-text condition/doctor notes).
-  - [ ] **Step 3: Recovery & Travel Constraints** (Recovery days, clinician travel guidance status: PROVIDED / NOT_PROVIDED, mobility limits, intensity).
-  - [ ] **Step 4: Financial Information** (Total available budget, currency, budget scope: solo vs travel party, contingency reserve preference).
-  - [ ] **Step 5: Tourism Preferences** (Multi-select interest categories with weight sliders 1-5, preferred accommodation tier).
-  - [ ] **Step 6: Review & Consent** (Structured summary, explicit consent check, disclaimer acknowledgment).
-  - [ ] Implement auto-save draft functionality (`PATCH /api/v1/trip-requests/{id}/`).
-- [ ] **Task 2.3: Hospital Eligibility & Ranking Engine (`engines/hospitals/`)**
-  - [ ] Hard eligibility filtering: active hospital, matching verified specialty & treatment category offering, valid location data, published status.
-  - [ ] Record exclusion reasons for non-matching hospitals.
-  - [ ] Multi-criteria soft ranking score ($HScore = 0.45T + 0.20C + 0.15I + 0.10G + 0.10V$).
-  - [ ] Unit tests for eligibility and ranking logic.
-- [ ] **Task 2.4: Recommendation Run Orchestration (`/trip-requests/{id}/generate-plan/`)**
-  - [ ] Validates request inputs and consent.
-  - [ ] Creates immutable `RecommendationRun` record with input snapshot.
-  - [ ] Generates separate `HospitalScenario` records for every eligible hospital.
-  - [ ] Handles synchronous/asynchronous execution state (`PROCESSING` -> `COMPLETED`).
-- [ ] **Task 2.5: Hospital Scenario Comparison UI (`/plan/[requestId]/results`)**
-  - [ ] Comparison layout (table on desktop, stacked cards on mobile).
-  - [ ] Display hospital name, city, specialty match, indicative treatment cost range, verification status, and scenario action button.
-  - [ ] Explain ranking factors and show clear medical disclaimers ("Matched Hospital", never "Medically Best").
+- [x] **Task 2.1: Trip Planning Domain Models (`apps.trip_planning`, `apps.recommendations`)**
+  - [x] `trip_requests` (id, user_id, origin_country_id, specialty_id, treatment_category_id, known_condition_text, total_budget_amount, budget_currency, party_size, preferred_arrival_date, preferred_departure_date, available_days, recovery_duration_days, clinician_travel_guidance_status, clinician_restrictions, insurance_status, travel_intensity_preference, status: DRAFT/SUBMITTED/PROCESSING/COMPLETED/FAILED).
+  - [x] `trip_request_interests` (trip_request_id, destination_category_id, preference_weight: 1-5).
+  - [x] `recommendation_runs` (id, trip_request_id, run_number, status, algorithm_version, weight_configuration_snapshot, input_snapshot, started_at, completed_at, error_message).
+  - [x] `hospital_scenarios` (id, recommendation_run_id, hospital_treatment_offering_id, rank, eligibility_status, exclusion_reason, ranking_score, scenario_currency).
+- [x] **Task 2.2: Multi-Step Assessment Wizard UI (`/plan/new`)**
+  - [x] **Step 1: Origin & Travel Details** (Country, party size, display currency, tentative dates/duration).
+  - [x] **Step 2: Medical Requirement** (Specialty selection: Cardiology/Orthopedics/Oncology, treatment category dropdown, free-text condition/doctor notes).
+  - [x] **Step 3: Recovery & Travel Constraints** (Recovery days, clinician travel guidance status: PROVIDED / NOT_PROVIDED, mobility limits, intensity).
+  - [x] **Step 4: Financial Information** (Total available budget, currency, budget scope: solo vs travel party, contingency reserve preference).
+  - [x] **Step 5: Tourism Preferences** (Multi-select interest categories with weight sliders 1-5, preferred accommodation tier).
+  - [x] **Step 6: Review & Consent** (Structured summary, explicit consent check, disclaimer acknowledgment).
+  - [x] Implement auto-save draft functionality (`PATCH /api/v1/trip-requests/{id}/`).
+- [x] **Task 2.3: Hospital Eligibility & Ranking Engine (`engines/hospitals/`)**
+  - [x] Hard eligibility filtering: active hospital, matching verified specialty & treatment category offering, valid location data, published status.
+  - [x] Record exclusion reasons for non-matching hospitals.
+  - [x] Multi-criteria soft ranking score ($HScore = 0.45T + 0.20C + 0.15I + 0.10G + 0.10V$).
+  - [x] Unit tests for eligibility and ranking logic.
+- [x] **Task 2.4: Recommendation Run Orchestration (`/trip-requests/{id}/generate-plan/`)**
+  - [x] Validates request inputs and consent.
+  - [x] Creates immutable `RecommendationRun` record with input snapshot.
+  - [x] Generates separate `HospitalScenario` records for every eligible hospital.
+  - [x] Handles synchronous/asynchronous execution state (`PROCESSING` -> `COMPLETED`).
+- [x] **Task 2.5: Hospital Scenario Comparison UI (`/plan/[requestId]/results`)**
+  - [x] Comparison layout (table on desktop, stacked cards on mobile).
+  - [x] Display hospital name, city, specialty match, indicative treatment cost range, verification status, and scenario action button.
+  - [x] Explain ranking factors and show clear medical disclaimers ("Matched Hospital", never "Medically Best").
 
 ---
 
 ### Phase 3: Hospital-Specific Budget Engine & Financial Scenarios
 **Goal:** Implement the deterministic Decimal-based budget ledger, calculating mandatory expenditures, cost ranges, shortfall states, and remaining discretionary budgets for each hospital scenario.
 
-- [ ] **Task 3.1: Scenario Budget Ledger Models (`apps.recommendations`)**
-  - [ ] `scenario_budget_lines` (id, hospital_scenario_id, expense_category: TREATMENT / INTERNATIONAL_FLIGHT / ACCOMMODATION / VISA / LOCAL_TRANSPORT / MISCELLANEOUS, description, min_amount, expected_amount, max_amount, source_currency, scenario_currency, exchange_rate_snapshot, converted_expected_amount, quantity, unit, data_classification).
-- [ ] **Task 3.2: Budget Calculation Engine (`engines/budgeting/`)**
-  - [ ] Convert all amounts using recorded exchange rate snapshot (`FX(c -> s)`).
-  - [ ] Calculate mandatory expenditures ($ME_s = TC_s + FC_s + HC_s + VC_s + LC_s + MC_s$).
-  - [ ] Quantity-based accommodation calculation ($HC_s = \text{NightlyRate} \times \text{Nights} \times \text{Rooms}$).
-  - [ ] Calculate initial discretionary budget ($DB_{0,s} = B_s - ME_s$).
-  - [ ] Detect `OVER_BUDGET` status when $DB_{0,s} < 0$, calculating shortfall ($|\text{DB}_{0,s}|$).
-  - [ ] Calculate parallel min/expected/max budget ranges: $DB_{min} = B - ME_{max}$, $DB_{max} = B - ME_{min}$.
-  - [ ] Apply configurable contingency reserve ($SpendableBudget_s = DB_{0,s} - Reserve_s$).
-- [ ] **Task 3.3: Budget Engine Unit & Edge Case Tests**
-  - [ ] Test exact Decimal precision (no floating-point rounding errors).
-  - [ ] Test negative discretionary budget handling.
-  - [ ] Test missing currency exchange rate handling.
-  - [ ] Test multi-party flight and room multiplier calculations.
-- [ ] **Task 3.4: Budget Dashboard UI (`/scenario/[scenarioId]/budget`)**
-  - [ ] Visual breakdown of mandatory expenses vs. initial discretionary budget.
-  - [ ] Stacked cost distribution chart with verified reconciliation to line items.
-  - [ ] Clear labeling of Indicative vs. Verified costs.
-  - [ ] Distinct warning alert and shortfall explanation for over-budget scenarios.
+- [x] **Task 3.1: Scenario Budget Ledger Models (`apps.recommendations`)**
+  - [x] `scenario_budget_lines` (id, hospital_scenario_id, expense_category: TREATMENT / INTERNATIONAL_FLIGHT / ACCOMMODATION / VISA / LOCAL_TRANSPORT / MISCELLANEOUS, description, min_amount, expected_amount, max_amount, source_currency, scenario_currency, exchange_rate_snapshot, converted_expected_amount, quantity, unit, data_classification).
+- [x] **Task 3.2: Budget Calculation Engine (`engines/budgeting/`)**
+  - [x] Convert all amounts using recorded exchange rate snapshot (`FX(c -> s)`).
+  - [x] Calculate mandatory expenditures ($ME_s = TC_s + FC_s + HC_s + VC_s + LC_s + MC_s$).
+  - [x] Quantity-based accommodation calculation ($HC_s = \text{NightlyRate} \times \text{Nights} \times \text{Rooms}$).
+  - [x] Calculate initial discretionary budget ($DB_{0,s} = B_s - ME_s$).
+  - [x] Detect `OVER_BUDGET` status when $DB_{0,s} < 0$, calculating shortfall ($|\text{DB}_{0,s}|$).
+  - [x] Calculate parallel min/expected/max budget ranges: $DB_{min} = B - ME_{max}$, $DB_{max} = B - ME_{min}$.
+  - [x] Apply configurable contingency reserve ($SpendableBudget_s = DB_{0,s} - Reserve_s$).
+- [x] **Task 3.3: Budget Engine Unit & Edge Case Tests**
+  - [x] Test exact Decimal precision (no floating-point rounding errors).
+  - [x] Test negative discretionary budget handling.
+  - [x] Test missing currency exchange rate handling.
+  - [x] Test multi-party flight and room multiplier calculations.
+- [x] **Task 3.4: Budget Dashboard UI (`/scenario/[scenarioId]/budget`)**
+  - [x] Visual breakdown of mandatory expenses vs. initial discretionary budget.
+  - [x] Stacked cost distribution chart with verified reconciliation to line items.
+  - [x] Clear labeling of Indicative vs. Verified costs.
+  - [x] Distinct warning alert and shortfall explanation for over-budget scenarios.
 
 ---
 
 ### Phase 4: Recovery-Aware 3-Tier Tourism Engine
 **Goal:** Recommend feasible tourist destinations across Local/Regional, State-Level, and National scopes, constrained by post-treatment recovery and clinician guidance.
 
-- [ ] **Task 4.1: Tourism Recommendation Models (`apps.recommendations`)**
-  - [ ] `destination_recommendations` (id, hospital_scenario_id, destination_id, tourism_scope: LOCAL_REGIONAL / STATE_LEVEL / NATIONAL, rank, interest_score, geography_score, cost_score, data_confidence_score, recovery_review_status, estimated_visit_cost, estimated_route_cost, estimated_route_duration, feasibility_status, explanation).
-- [ ] **Task 4.2: Route & Maps Integration Adapter (`integrations/maps/`)**
-  - [ ] Create `MapsProvider` interface with concrete implementations:
+- [x] **Task 4.1: Tourism Recommendation Models (`apps.recommendations`)**
+  - [x] `destination_recommendations` (id, hospital_scenario_id, destination_id, tourism_scope: LOCAL_REGIONAL / STATE_LEVEL / NATIONAL, rank, interest_score, geography_score, cost_score, data_confidence_score, recovery_review_status, estimated_visit_cost, estimated_route_cost, estimated_route_duration, feasibility_status, explanation).
+- [x] **Task 4.2: Route & Maps Integration Adapter (`integrations/maps/`)**
+  - [x] Create `MapsProvider` interface with concrete implementations:
     - Provider 1: Google Maps Routes API (when API key is present).
     - Provider 2: PostGIS / Haversine distance-based fallback with estimated average speed.
-  - [ ] Cache route results to minimize external calls.
-- [ ] **Task 4.3: Tourism Recommendation Engine (`engines/tourism/`)**
-  - [ ] Hard constraints filter: Active destinations, route availability, schedule window check, recovery constraint compliance.
-  - [ ] 3-Tier Scope classification relative to hospital city:
+  - [x] Cache route results to minimize external calls.
+- [x] **Task 4.3: Tourism Recommendation Engine (`engines/tourism/`)**
+  - [x] Hard constraints filter: Active destinations, route availability, schedule window check, recovery constraint compliance.
+  - [x] 3-Tier Scope classification relative to hospital city:
     - `LOCAL_REGIONAL`: Within configurable radius / transit duration.
     - `STATE_LEVEL`: In hospital's state.
     - `NATIONAL`: Pan-India destinations.
-  - [ ] Soft ranking:
+  - [x] Soft ranking:
     - $\text{InterestScore}(d)$ via weighted category match.
     - $\text{GeoScore}(d)$ based on travel time.
     - $\text{CostScore}(d)$ based on visit cost vs. discretionary budget.
     - Composite $DScore(d) = 0.40 I_s + 0.25 G_s + 0.20 C_s + 0.15 V_s$.
-  - [ ] Enforce recovery constraint boundary: flag unconfirmed activities for clinician review.
-- [ ] **Task 4.4: Tourism Recommendation UI (`/scenario/[scenarioId]/destinations`)**
-  - [ ] Segmented scope tabs (`Local / Regional`, `State-Level`, `National / Pan-India`).
-  - [ ] Destination cards showing travel intensity, travel duration from hospital, entry fees, suggested visit duration, and match reasons.
-  - [ ] Clinician review badges on destinations requiring medical clearance.
+  - [x] Enforce recovery constraint boundary: flag unconfirmed activities for clinician review.
+- [x] **Task 4.4: Tourism Recommendation UI (`/scenario/[scenarioId]/destinations`)**
+  - [x] Segmented scope tabs (`Local / Regional`, `State-Level`, `National / Pan-India`).
+  - [x] Destination cards showing travel intensity, travel duration from hospital, entry fees, suggested visit duration, and match reasons.
+  - [x] Clinician review badges on destinations requiring medical clearance.
 
 ---
 
 ### Phase 5: Dynamic Travel-Agency Package Matching & Inclusion Credit Ledger
 **Goal:** Match curated travel-agency packages with recommended destinations, applying the Dynamic Inclusion Credit to eliminate double-counting and derive effective incremental costs.
 
-- [ ] **Task 5.1: Package Match & Credit Ledger Models (`apps.recommendations`)**
-  - [ ] `package_matches` (id, hospital_scenario_id, travel_package_id, rank, destination_coverage_score, inclusion_credit, listed_package_price, effective_incremental_cost, remaining_discretionary_budget, budget_feasibility_status, itinerary_fit_score, agency_reliability_score, overall_score, explanation).
-  - [ ] `package_match_inclusion_credits` (id, package_match_id, package_inclusion_id, scenario_budget_line_id, credited_amount, credited_currency, credit_reason).
-- [ ] **Task 5.2: Package Matching & Credit Engine (`engines/package_matching/`)**
-  - [ ] Calculate destination coverage:
+- [x] **Task 5.1: Package Match & Credit Ledger Models (`apps.recommendations`)**
+  - [x] `package_matches` (id, hospital_scenario_id, travel_package_id, rank, destination_coverage_score, inclusion_credit, listed_package_price, effective_incremental_cost, remaining_discretionary_budget, budget_feasibility_status, itinerary_fit_score, agency_reliability_score, overall_score, explanation).
+  - [x] `package_match_inclusion_credits` (id, package_match_id, package_inclusion_id, scenario_budget_line_id, credited_amount, credited_currency, credit_reason).
+- [x] **Task 5.2: Package Matching & Credit Engine (`engines/package_matching/`)**
+  - [x] Calculate destination coverage:
     $$\text{Coverage}(p) = \frac{\sum_{d \in D_r \cap D_p} w_d}{\sum_{d \in D_r} w_d}$$
-  - [ ] Credit calculation: Match package inclusions against mandatory scenario budget lines (`equivalent_budget_category`).
+  - [x] Credit calculation: Match package inclusions against mandatory scenario budget lines (`equivalent_budget_category`).
     $$\text{Credit}_{p,c} = \min(B_c, V_{p,c})$$
-  - [ ] Enforce double-counting prevention: Cap credit at budgeted expense; prorate hotel nights; exclude unbudgeted services (sightseeing/meals); ignore unverified or optional values.
-  - [ ] Calculate effective incremental package cost:
+  - [x] Enforce double-counting prevention: Cap credit at budgeted expense; prorate hotel nights; exclude unbudgeted services (sightseeing/meals); ignore unverified or optional values.
+  - [x] Calculate effective incremental package cost:
     $$EPC_p = P_p - I_p$$
-  - [ ] Calculate remaining discretionary budget:
+  - [x] Calculate remaining discretionary budget:
     $$R_p = DB_{0,s} - EPC_p$$
-  - [ ] Enforce budget feasibility check: $EPC_p \le SpendableBudget_s$.
-  - [ ] Composite package ranking:
+  - [x] Enforce budget feasibility check: $EPC_p \le SpendableBudget_s$.
+  - [x] Composite package ranking:
     $$PScore(p) = 0.45\text{Coverage} + 0.20\text{CostEff} + 0.20\text{ItineraryFit} + 0.10\text{ServiceComp} + 0.05\text{AgencyConf}$$
-- [ ] **Task 5.3: Package Matching Unit & Financial Tests**
-  - [ ] Test flight credit when package includes international airfare vs. when it does not.
-  - [ ] Test partial hotel night crediting (e.g. 3 of 7 nights credited).
-  - [ ] Test that sightseeing/meals do not receive mandatory credit.
-  - [ ] Test party size price normalization.
-  - [ ] Test duplicate credit prevention on multiple runs.
-- [ ] **Task 5.4: Package Comparison UI (`/scenario/[scenarioId]/packages`)**
-  - [ ] Side-by-side package cards comparing: Listed Package Price, Included Service Credit, Effective Incremental Cost, and Remaining Discretionary Budget.
-  - [ ] Interactive breakdown modal explaining how each credit was derived.
-  - [ ] Clear call to action to select a package for the final plan.
+- [x] **Task 5.3: Package Matching Unit & Financial Tests**
+  - [x] Test flight credit when package includes international airfare vs. when it does not.
+  - [x] Test partial hotel night crediting (e.g. 3 of 7 nights credited).
+  - [x] Test that sightseeing/meals do not receive mandatory credit.
+  - [x] Test party size price normalization.
+  - [x] Test duplicate credit prevention on multiple runs.
+- [x] **Task 5.4: Package Comparison UI (`/scenario/[scenarioId]/packages`)**
+  - [x] Side-by-side package cards comparing: Listed Package Price, Included Service Credit, Effective Incremental Cost, and Remaining Discretionary Budget.
+  - [x] Interactive breakdown modal explaining how each credit was derived.
+  - [x] Clear call to action to select a package for the final plan.
 
 ---
 
 ### Phase 6: Final Plan Synthesis, Export, Hardening & Staging Release
 **Goal:** Allow the patient to save, customize, and export their comprehensive medical-tourism plan; implement audit logging, security hardening, and complete end-to-end integration testing.
 
-- [ ] **Task 6.1: Final Plan Models (`apps.final_plans`)**
-  - [ ] `final_plans` (id, user_id, hospital_scenario_id, package_match_id nullable, selected_scope, status, plan_title, created_at, updated_at).
-  - [ ] `final_plan_destinations` (final_plan_id, destination_id, sequence_order, planned_visit_date, planned_duration_minutes, notes).
-- [ ] **Task 6.2: Final Plan Management API & Endpoints**
-  - [ ] `POST /api/v1/final-plans/`: Save selected hospital, optional package, and ordered destinations.
-  - [ ] `GET /api/v1/final-plans/{id}/`: Retrieve saved plan.
-  - [ ] `GET /api/v1/final-plans/{id}/export/`: Render printable HTML/JSON export summary.
-- [ ] **Task 6.3: Final Plan UI & Print/Export Layout (`/final-plan/[planId]`)**
-  - [ ] Unified summary view: Hospital details, medical offering, complete budget breakdown, tourism itinerary, package details, and remaining balance.
-  - [ ] Print-optimized stylesheet (`@media print`) for clean offline printing.
-  - [ ] Prominent Medical & Financial Safety Disclaimers.
-- [ ] **Task 6.4: AI/LLM Provider Integration (`integrations/llm/`)**
-  - [ ] Implement `LLMProvider` abstraction (Google Gemini API / OpenAI).
-  - [ ] Structured extraction of user requirements from free-text doctor notes.
-  - [ ] Natural language explanations of hospital matches and package trade-offs.
-  - [ ] Graceful fallback: If LLM is offline or disabled, fallback to deterministic template explanations with zero disruption to planning.
-- [ ] **Task 6.5: Audit Logging & History Dashboard**
-  - [ ] Capture administrative edits and recommendation executions in `audit_events`.
-  - [ ] Patient Dashboard (`/dashboard`) displaying draft requests, past recommendation runs, and saved final plans.
-- [ ] **Task 6.6: Security Hardening & Permission Auditing**
-  - [ ] Enforce strict DRF object-level permissions (Patient A cannot access Patient B's requests, scenarios, or plans).
-  - [ ] Sanitize all free-text fields; prevent XSS, CSRF, and injection attacks.
-  - [ ] Verify that no API keys or credentials exist in client bundles.
-- [ ] **Task 6.7: Comprehensive End-to-End Verification Test**
-  - [ ] Execute automated full user journey:
+- [x] **Task 6.1: Final Plan Models (`apps.final_plans`)**
+  - [x] `final_plans` (id, user_id, hospital_scenario_id, package_match_id nullable, selected_scope, status, plan_title, created_at, updated_at).
+  - [x] `final_plan_destinations` (final_plan_id, destination_id, sequence_order, planned_visit_date, planned_duration_minutes, notes).
+- [x] **Task 6.2: Final Plan Management API & Endpoints**
+  - [x] `POST /api/v1/final-plans/`: Save selected hospital, optional package, and ordered destinations.
+  - [x] `GET /api/v1/final-plans/{id}/`: Retrieve saved plan.
+  - [x] `GET /api/v1/final-plans/{id}/export/`: Render printable HTML/JSON export summary.
+- [x] **Task 6.3: Final Plan UI & Print/Export Layout (`/final-plan/[planId]`)**
+  - [x] Unified summary view: Hospital details, medical offering, complete budget breakdown, tourism itinerary, package details, and remaining balance.
+  - [x] Print-optimized stylesheet (`@media print`) for clean offline printing.
+  - [x] Prominent Medical & Financial Safety Disclaimers.
+- [x] **Task 6.4: AI/LLM Provider Integration (`integrations/llm/`)**
+  - [x] Implement `LLMProvider` abstraction (Google Gemini API / OpenAI).
+  - [x] Structured extraction of user requirements from free-text doctor notes.
+  - [x] Natural language explanations of hospital matches and package trade-offs.
+  - [x] Graceful fallback: If LLM is offline or disabled, fallback to deterministic template explanations with zero disruption to planning.
+- [x] **Task 6.5: Audit Logging & History Dashboard**
+  - [x] Capture administrative edits and recommendation executions in `audit_events`.
+  - [x] Patient Dashboard (`/dashboard`) displaying draft requests, past recommendation runs, and saved final plans.
+- [x] **Task 6.6: Security Hardening & Permission Auditing**
+  - [x] Enforce strict DRF object-level permissions (Patient A cannot access Patient B's requests, scenarios, or plans).
+  - [x] Sanitize all free-text fields; prevent XSS, CSRF, and injection attacks.
+  - [x] Verify that no API keys or credentials exist in client bundles.
+- [x] **Task 6.7: Comprehensive End-to-End Verification Test**
+  - [x] Execute automated full user journey:
     `Register -> Login -> Complete Wizard (Cardiology) -> Generate Scenarios -> View Hospital Comparison -> Inspect Budget Breakdown -> Explore Destinations -> Match Package with Credit -> Save Final Plan -> Verify Persistence & Totals`.
 
 ---

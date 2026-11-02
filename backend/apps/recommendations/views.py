@@ -20,7 +20,11 @@ class RecommendationRunViewSet(viewsets.ReadOnlyModelViewSet):
     permission_classes = [permissions.IsAuthenticated]
 
     def get_queryset(self):
-        return RecommendationRun.objects.filter(trip_request__user=self.request.user).prefetch_related('scenarios')
+        qs = RecommendationRun.objects.filter(trip_request__user=self.request.user).prefetch_related('scenarios')
+        trip_request_id = self.request.query_params.get('trip_request')
+        if trip_request_id:
+            qs = qs.filter(trip_request_id=trip_request_id)
+        return qs
 
 
 class HospitalScenarioViewSet(viewsets.ReadOnlyModelViewSet):
