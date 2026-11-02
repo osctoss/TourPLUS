@@ -1,0 +1,15 @@
+# Core Django and DRF
+Django>=5.1,<5.3
+djangorestframework>=3.15.0
+django-cors-headers>=4.4.0
+django-filter>=24.3
+python-dotenv>=1.0.1
+
+# Database
+psycopg[binary]>=3.2.0
+
+# Utilities & Data validation
+pydantic>=2.9.0
+requests>=2.32.0
+python-dateutil>=2.9.0
+
