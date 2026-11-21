@@ -51,6 +51,13 @@ def main():
     except Exception as e:
         print(f"[WARN] Migration check returned: {e}")
 
+    # 2. Ensure catalogue is seeded
+    print("[INIT] Ensuring medical & tourism catalogue is seeded...")
+    try:
+        subprocess.run([python_exe, manage_py, "seed_catalogue"], cwd=BACKEND_DIR, check=True)
+    except Exception as e:
+        print(f"[WARN] Catalogue seeding returned: {e}")
+
     env = os.environ.copy()
     env["PYTHONUNBUFFERED"] = "1"
 

@@ -38,6 +38,34 @@ interface Country {
   default_currency: string;
 }
 
+const DEFAULT_COUNTRIES: Country[] = [
+  { id: "25c91061-7181-4418-9b28-2181db6dc7ac", name: "United States", iso2: "US", default_currency: "USD" },
+  { id: "75d57820-a4b1-418a-9998-c29f27950b3e", name: "United Kingdom", iso2: "GB", default_currency: "GBP" },
+  { id: "94cd18d4-5924-4119-8d45-57bb671d67bf", name: "United Arab Emirates", iso2: "AE", default_currency: "AED" },
+  { id: "52706af5-33a8-485a-832e-f3d7c198bdde", name: "India", iso2: "IN", default_currency: "INR" },
+];
+
+const DEFAULT_SPECIALTIES: Specialty[] = [
+  { id: "791a5ba8-b247-463d-a7db-e10313beb5f4", name: "Cardiology", slug: "cardiology", description: "Comprehensive interventional and surgical cardiac care." },
+  { id: "bc650855-06e5-403b-b1bb-a796457a4518", name: "Orthopedics", slug: "orthopedics", description: "Joint reconstruction, arthroplasty, and spine surgery." },
+  { id: "a69fdd91-7edc-4c4a-b594-5c9f7dfd7ab1", name: "Oncology", slug: "oncology", description: "Medical, surgical, and radiation oncology therapies." },
+];
+
+const DEFAULT_CATEGORIES: Category[] = [
+  { id: "dbe87171-cc4a-4149-9952-85aa99be72e0", specialty: "791a5ba8-b247-463d-a7db-e10313beb5f4", name: "Angioplasty & Drug-Eluting Stents", slug: "angioplasty-stenting" },
+  { id: "f9bae7b9-98ef-4aae-b80d-77567e6b5db7", specialty: "791a5ba8-b247-463d-a7db-e10313beb5f4", name: "Coronary Artery Bypass Grafting (CABG)", slug: "cabg" },
+  { id: "82965bb1-95ba-4581-8cf2-e0e2b3e32a54", specialty: "791a5ba8-b247-463d-a7db-e10313beb5f4", name: "Heart Valve Replacement & Repair", slug: "heart-valve-replacement" },
+  { id: "182f5034-7e58-4122-97de-7b8290301042", specialty: "791a5ba8-b247-463d-a7db-e10313beb5f4", name: "Pediatric Cardiac Surgery", slug: "pediatric-cardiac-surgery" },
+  { id: "9df47af6-a417-40ce-84d8-3669f1e4098e", specialty: "bc650855-06e5-403b-b1bb-a796457a4518", name: "Total Knee Replacement (TKR)", slug: "total-knee-replacement" },
+  { id: "fd80b319-09c1-41db-aacb-ce823a8287dc", specialty: "bc650855-06e5-403b-b1bb-a796457a4518", name: "Total Hip Replacement (THR)", slug: "total-hip-replacement" },
+  { id: "3194ef2a-33ec-471e-8509-2cb23a44bbe4", specialty: "bc650855-06e5-403b-b1bb-a796457a4518", name: "Spine Decompression & Fusion", slug: "spine-fusion" },
+  { id: "d913984b-031b-4b2f-9fe3-59db2a263628", specialty: "bc650855-06e5-403b-b1bb-a796457a4518", name: "Arthroscopic Shoulder & ACL Repair", slug: "arthroscopic-shoulder-acl" },
+  { id: "2ea5e929-f7cb-4d76-b9a6-95664c60c952", specialty: "a69fdd91-7edc-4c4a-b594-5c9f7dfd7ab1", name: "Surgical Oncology (Tumor Resection)", slug: "surgical-oncology" },
+  { id: "3e1d81e1-b1b6-4029-a06f-23a190ce770b", specialty: "a69fdd91-7edc-4c4a-b594-5c9f7dfd7ab1", name: "Precision Radiation (IMRT / Proton)", slug: "radiation-oncology" },
+  { id: "e59109f5-39a0-4988-bf9d-1313332f9d66", specialty: "a69fdd91-7edc-4c4a-b594-5c9f7dfd7ab1", name: "Medical Oncology & Immunotherapy", slug: "medical-oncology" },
+  { id: "5fb18c64-517d-436d-b453-4bb8ddb8d743", specialty: "a69fdd91-7edc-4c4a-b594-5c9f7dfd7ab1", name: "Bone Marrow Transplant (BMT)", slug: "bone-marrow-transplant" },
+];
+
 export default function NewPlanAssessmentPage() {
   const router = useRouter();
   const [currentStep, setCurrentStep] = useState(1);
@@ -73,35 +101,56 @@ export default function NewPlanAssessmentPage() {
   useEffect(() => {
     async function loadData() {
       try {
-        const [specRes, catRes, destCatRes, geoRes] = await Promise.all([
+        const [specRes, catRes, destCatRes, geoRes] = await Promise.allSettled([
           apiClient.get<any>("/catalog/specialties/"),
-          apiClient.get<any>("/catalog/treatment-categories/"),
+          apiClient.get<any>("/catalog/treatment-categories/").catch(() => apiClient.get<any>("/catalog/treatments/")),
           apiClient.get<any>("/tourism/categories/"),
           apiClient.get<any>("/geo/countries/"),
         ]);
 
-        const specList = specRes.results || specRes || [];
-        const catList = catRes.results || catRes || [];
-        const destCatList = destCatRes.results || destCatRes || [];
-        const countryList = geoRes.results || geoRes || [];
+        const specList = specRes.status === "fulfilled" ? (specRes.value?.results || specRes.value || []) : [];
+        const catList = catRes.status === "fulfilled" ? (catRes.value?.results || catRes.value || []) : [];
+        const destCatList = destCatRes.status === "fulfilled" ? (destCatRes.value?.results || destCatRes.value || []) : [];
+        const countryList = geoRes.status === "fulfilled" ? (geoRes.value?.results || geoRes.value || []) : [];
 
-        setSpecialties(specList);
-        setCategories(catList);
+        const finalSpecialties = specList.length > 0 ? specList : DEFAULT_SPECIALTIES;
+        const finalCategories = catList.length > 0 ? catList : DEFAULT_CATEGORIES;
+        const finalCountries = countryList.length > 0 ? countryList : DEFAULT_COUNTRIES;
+
+        setSpecialties(finalSpecialties);
+        setCategories(finalCategories);
         setDestCategories(destCatList);
-        setCountries(countryList);
+        setCountries(finalCountries);
 
-        if (specList.length > 0) setSelectedSpecialty(specList[0].id);
-        if (countryList.length > 0) setOriginCountry(countryList[0].id);
+        if (finalSpecialties.length > 0) setSelectedSpecialty(finalSpecialties[0].id);
+        if (finalCountries.length > 0) {
+          const defaultCountry = finalCountries.find((c: Country) => c.iso2 === "US") || finalCountries[0];
+          setOriginCountry(defaultCountry.id);
+          if (defaultCountry.default_currency) setBudgetCurrency(defaultCountry.default_currency);
+        }
       } catch (err: any) {
-        setError("Failed to load clinical and tourism catalogue options. Please check your connection.");
+        console.error("Error loading catalogue data, falling back to curated defaults", err);
+        setSpecialties(DEFAULT_SPECIALTIES);
+        setCategories(DEFAULT_CATEGORIES);
+        setCountries(DEFAULT_COUNTRIES);
+        setSelectedSpecialty(DEFAULT_SPECIALTIES[0].id);
+        setOriginCountry(DEFAULT_COUNTRIES[0].id);
+        setBudgetCurrency(DEFAULT_COUNTRIES[0].default_currency);
       }
     }
     loadData();
   }, []);
 
-  const filteredCategories = categories.filter(
-    (c) => !selectedSpecialty || c.specialty === selectedSpecialty || (c as any).specialty_id === selectedSpecialty
-  );
+  const filteredCategories = categories.filter((c) => {
+    if (!selectedSpecialty) return true;
+    const currentSpec = specialties.find((s) => s.id === selectedSpecialty);
+    return (
+      c.specialty === selectedSpecialty ||
+      (c as any).specialty_id === selectedSpecialty ||
+      (currentSpec && c.specialty === currentSpec.slug) ||
+      (currentSpec && (c as any).specialty_slug === currentSpec.slug)
+    );
+  });
 
   const toggleInterest = (catId: string) => {
     setSelectedInterests((prev) => {
@@ -238,7 +287,14 @@ export default function NewPlanAssessmentPage() {
               </label>
               <select
                 value={originCountry}
-                onChange={(e) => setOriginCountry(e.target.value)}
+                onChange={(e) => {
+                  const val = e.target.value;
+                  setOriginCountry(val);
+                  const matched = countries.find((c) => c.id === val);
+                  if (matched && matched.default_currency) {
+                    setBudgetCurrency(matched.default_currency);
+                  }
+                }}
                 className="w-full rounded-md border border-slate-300 bg-white px-3 py-2 text-sm shadow-sm focus:border-brand-blue focus:outline-none focus:ring-1 focus:ring-brand-blue"
               >
                 {countries.map((c) => (
