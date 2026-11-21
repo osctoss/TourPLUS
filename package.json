@@ -1,0 +1,24 @@
+{
+  "name": "tourplus-ai",
+  "version": "1.0.0",
+  "private": true,
+  "description": "TourPlus AI — Medical Tourism Decision-Support Platform for India",
+  "scripts": {
+    "dev": "python scripts/dev.py",
+    "dev:backend": "backend/.venv/Scripts/python backend/manage.py runserver",
+    "dev:frontend": "pnpm --dir frontend dev",
+    "test": "backend/.venv/Scripts/python backend/manage.py test tests",
+    "build": "pnpm --dir frontend build",
+    "seed": "backend/.venv/Scripts/python scripts/seed_demo_data.py",
+    "validate": "backend/.venv/Scripts/python scripts/validate_catalogue.py"
+  },
+  "keywords": [
+    "medical-tourism",
+    "decision-support",
+    "nextjs",
+    "django",
+    "supabase"
+  ],
+  "author": "TourPlus AI",
+  "license": "Proprietary"
+}

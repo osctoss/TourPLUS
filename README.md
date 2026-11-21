@@ -223,15 +223,28 @@ TourPlus/
 
 ## Quickstart Guide
 
-### Prerequisites
-- **Python**: 3.11 or higher
-- **Node.js**: 18.x or higher
-- **Package Manager**: `pnpm` (recommended) or `npm`
-- **Database**: Supabase PostgreSQL instance (or local PostgreSQL / SQLite)
+### Run Backend + Frontend in One Go 🚀
+
+You can start both the Django backend (port 8000) and Next.js frontend (port 3000) concurrently with a single command:
+
+```powershell
+# Option A: Using pnpm or npm (from project root)
+pnpm dev
+
+# Option B: Using PowerShell runner
+.\dev.ps1
+
+# Option C: Using Windows CMD / Double-Click
+start.bat
+```
+
+> The runner automatically verifies migrations, boots Django at `http://localhost:8000/api/v1/`, boots Next.js at `http://localhost:3000/`, and cleanly terminates both processes when you press `Ctrl+C`.
 
 ---
 
-### 1. Backend Setup
+### Manual Setup (Separate Terminals)
+
+#### 1. Backend Setup
 
 ```bash
 # Navigate to the backend directory
@@ -262,7 +275,7 @@ Django Admin dashboard: **`http://localhost:8000/admin/`**
 
 ---
 
-### 2. Frontend Setup
+#### 2. Frontend Setup
 
 ```bash
 # Navigate to the frontend directory
