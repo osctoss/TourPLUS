@@ -9,12 +9,14 @@ export default function AboutPage() {
     <div className="py-12 sm:py-16">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-4xl space-y-12">
         <div className="text-center space-y-4">
-          <div className="flex justify-center mb-2">
-            <img
-              src="/logo/TourPLUS.svg"
-              alt="TourPLUS Logo"
-              className="h-20 w-20 object-contain shadow-sm rounded-xl p-1 bg-white border border-border"
-            />
+          <div className="flex justify-center mb-4">
+            <div className="inline-flex items-center justify-center p-2.5 bg-white rounded-2xl border-2 border-border shadow-subtle ring-4 ring-blue-light/60">
+              <img
+                src="/logo/TourPLUS.svg"
+                alt="TourPLUS Logo"
+                className="h-20 w-20 object-contain rounded-xl"
+              />
+            </div>
           </div>
           <Badge variant="info">Mission & Principles</Badge>
           <h1 className="text-3xl sm:text-4xl font-extrabold text-primary">

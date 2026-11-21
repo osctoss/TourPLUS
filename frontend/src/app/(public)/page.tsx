@@ -24,12 +24,14 @@ export default function LandingPage() {
       {/* Hero Section */}
       <section className="relative overflow-hidden bg-gradient-to-b from-blue-light/50 via-white to-surface py-16 sm:py-24 border-b border-border">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-5xl text-center space-y-6">
-          <div className="flex justify-center mb-2">
-            <img
-              src="/logo/TourPLUS.svg"
-              alt="TourPLUS Logo"
-              className="h-16 w-16 object-contain"
-            />
+          <div className="flex justify-center mb-4">
+            <div className="inline-flex items-center justify-center p-3 bg-white rounded-2xl border-2 border-border shadow-subtle ring-4 ring-blue-light/60 hover:shadow-card hover:border-blue/40 transition-all duration-300">
+              <img
+                src="/logo/TourPLUS.svg"
+                alt="TourPLUS Logo"
+                className="h-20 w-20 sm:h-24 sm:w-24 object-contain rounded-xl"
+              />
+            </div>
           </div>
           <Badge variant="success" className="mb-2 py-1 px-3 text-xs uppercase tracking-wider">
             <Sparkles className="w-3.5 h-3.5 mr-1 text-green" />
