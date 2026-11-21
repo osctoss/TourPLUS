@@ -7,14 +7,16 @@ export function Footer() {
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-10">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           <div className="space-y-3">
-            <div className="flex items-center gap-2">
-              <div className="h-7 w-7 rounded bg-primary flex items-center justify-center text-white font-heading font-bold text-sm">
-                T+
-              </div>
-              <span className="font-heading font-bold text-primary">TourPlus AI</span>
+            <div className="flex items-center gap-2.5">
+              <img
+                src="/logo/TourPLUS.svg"
+                alt="TourPLUS Logo"
+                className="h-7 w-7 object-contain rounded"
+              />
+              <span className="font-heading font-bold text-lg text-primary">TourPLUS</span>
             </div>
             <p className="text-xs text-muted leading-relaxed">
-              AI-assisted, patient-centric decision-support platform for personalized medical tourism in India.
+              Patient-centric decision-support platform for personalized medical tourism in India.
             </p>
           </div>
 
@@ -31,7 +33,7 @@ export function Footer() {
             <h4 className="text-xs font-semibold uppercase tracking-wider text-primary mb-3">Platform</h4>
             <ul className="space-y-2 text-xs text-muted">
               <li><Link href="/how-it-works" className="hover:text-primary">How It Works</Link></li>
-              <li><Link href="/about" className="hover:text-primary">About TourPlus AI</Link></li>
+              <li><Link href="/about" className="hover:text-primary">About TourPLUS</Link></li>
               <li><Link href="/plan/new" className="hover:text-primary">Patient Assessment</Link></li>
             </ul>
           </div>
@@ -47,7 +49,7 @@ export function Footer() {
         </div>
 
         <div className="mt-8 pt-6 border-t border-border flex flex-col sm:flex-row items-center justify-between text-xs text-muted gap-4">
-          <p>&copy; {new Date().getFullYear()} TourPlus AI. All rights reserved.</p>
+          <p>&copy; {new Date().getFullYear()} TourPLUS. All rights reserved.</p>
           <div className="flex items-center gap-4">
             <span className="text-muted/60">Decision Support System — India</span>
           </div>

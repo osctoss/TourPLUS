@@ -1,6 +1,12 @@
-# TourPlus AI — Medical Tourism Decision-Support Platform
-
 <div align="center">
+
+<p align="center">
+  <img src="Assets/Icons/TourPLUS.svg" alt="TourPLUS Logo" width="160" height="160" />
+</p>
+
+# TourPLUS
+
+**Patient-Centric Medical Tourism Decision-Support Platform for India**
 
 [![Next.js](https://img.shields.io/badge/Next.js-15.1-black?logo=next.js)](https://nextjs.org/)
 [![React](https://img.shields.io/badge/React-18.3-blue?logo=react)](https://react.dev/)
@@ -13,8 +19,6 @@
 [![Tests](https://img.shields.io/badge/Tests-15%20Passed-success)](#automated-testing--verification)
 [![License](https://img.shields.io/badge/License-Proprietary-darkred)](#license)
 
-**An AI-assisted, patient-centric decision-support platform for personalized medical tourism in India.**
-
 [Key Features](#key-features) • [Architecture](#system-architecture) • [Financial Mathematics](#financial--recommendation-mathematics) • [Quickstart](#quickstart-guide) • [Supabase Setup](#database--supabase-integration) • [API Contracts](#api-contracts) • [Testing](#automated-testing--verification) • [Medical Disclaimers](#medical--financial-disclaimers)
 
 </div>
@@ -25,9 +29,9 @@
 
 Planning an international medical journey is a fragmented, high-stakes process. Prospective patients must coordinate hospitals, accredited clinical specialties, foreign travel visas, international airfare, recovery lodging, local transport, post-procedure tourism, and travel agency packages across multiple disconnected intermediaries.
 
-**TourPlus AI** unifies this journey into a single, deterministic, and explainable decision framework. The platform evaluates patient medical requirements, travel party sizes, and budgets to generate **discrete, parallel scenarios for each eligible hospital city**. 
+**TourPLUS** unifies this journey into a single, deterministic, and explainable decision framework. The platform evaluates patient medical requirements, travel party sizes, and budgets to generate **discrete, parallel scenarios for each eligible hospital city**. 
 
-Unlike generic directories or booking aggregators, TourPlus AI solves the critical **double-counting problem**: when an agency package includes hotel nights or international airfare already accounted for in mandatory expenses, TourPlus AI credits those inclusions against the ledger to calculate the **true effective incremental package cost** ($EPC_p$).
+Unlike generic directories or booking aggregators, TourPLUS solves the critical **double-counting problem**: when an agency package includes hotel nights or international airfare already accounted for in mandatory expenses, TourPLUS credits those inclusions against the ledger to calculate the **true effective incremental package cost** ($EPC_p$).
 
 ---
 
@@ -168,7 +172,7 @@ $$R_p = DB_{0,s} - EPC_p$$
 ## Repository Structure
 
 ```text
-TourPlus/
+TourPLUS/
 ├── backend/                       # Django 5.2 LTS backend monolith
 │   ├── apps/                      # Modular domain applications
 │   │   ├── accounts/              # Custom UUID User, PatientProfile, Consents
@@ -294,7 +298,7 @@ The web client will be running at: **`http://localhost:3000/`**
 
 ## Database & Supabase Integration
 
-TourPlus AI natively supports **Supabase (PostgreSQL + PostGIS)**.
+TourPLUS natively supports **Supabase (PostgreSQL + PostGIS)**.
 
 ### Connecting to Supabase
 
@@ -390,7 +394,7 @@ pnpm run build
 
 ## Medical & Financial Disclaimers
 
-> **IMPORTANT MEDICAL NOTICE**: TourPlus AI provides non-clinical administrative, logistical, and financial decision support only. It is **not** a licensed healthcare provider, medical clinic, or hospital. The platform does **not** provide diagnoses, treatment prescriptions, or clinical triage. All surgical procedures, clinical recovery schedules, mobility limitations, and travel feasibility clearances must be evaluated and approved by the patient's licensed treating physician.
+> **IMPORTANT MEDICAL NOTICE**: TourPLUS provides non-clinical administrative, logistical, and financial decision support only. It is **not** a licensed healthcare provider, medical clinic, or hospital. The platform does **not** provide diagnoses, treatment prescriptions, or clinical triage. All surgical procedures, clinical recovery schedules, mobility limitations, and travel feasibility clearances must be evaluated and approved by the patient's licensed treating physician.
 
 > **FINANCIAL ESTIMATE NOTICE**: All displayed medical treatment costs, accommodation rates, and flight costs are indicative estimates based on curated hospital offerings. Final hospital billing depends on diagnostic evaluation upon arrival, surgical complexity, and required clinical length of stay.
 
@@ -398,4 +402,4 @@ pnpm run build
 
 ## License
 
-Proprietary © 2026 TourPlus AI. All rights reserved.
+Proprietary © 2026 TourPLUS. All rights reserved.

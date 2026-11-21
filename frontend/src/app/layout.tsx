@@ -5,9 +5,12 @@ import { Footer } from "@/components/layout/footer";
 import { Providers } from "./providers";
 
 export const metadata: Metadata = {
-  title: "TourPlus AI — Patient-Centric Medical Tourism in India",
+  title: "TourPLUS — Patient-Centric Medical Tourism in India",
   description:
-    "AI-assisted decision-support platform connecting hospital discovery, transparent budgeting, recovery-aware tourism, and travel agency package matching.",
+    "Decision-support platform connecting hospital discovery, transparent budgeting, recovery-aware tourism, and travel agency package matching in India.",
+  icons: {
+    icon: "/logo/TourPLUS.svg",
+  },
 };
 
 export default function RootLayout({

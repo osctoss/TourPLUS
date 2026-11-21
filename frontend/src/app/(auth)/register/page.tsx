@@ -54,7 +54,14 @@ export default function RegisterPage() {
     <div className="py-12 sm:py-20 container mx-auto px-4 max-w-lg">
       <Card>
         <CardHeader className="text-center space-y-2">
-          <CardTitle className="text-2xl font-bold">Create Patient Account</CardTitle>
+          <div className="flex justify-center mb-1">
+            <img
+              src="/logo/TourPLUS.svg"
+              alt="TourPLUS Logo"
+              className="h-12 w-12 object-contain"
+            />
+          </div>
+          <CardTitle className="text-2xl font-bold">Create TourPLUS Account</CardTitle>
           <CardDescription>
             Begin planning your personalized medical travel journey to India.
           </CardDescription>
@@ -140,7 +147,7 @@ export default function RegisterPage() {
                 className="mt-1 h-4 w-4 rounded border-border text-green focus:ring-green"
               />
               <label htmlFor="consent" className="text-xs text-muted leading-relaxed">
-                I consent to the processing of my travel and medical preference data for informational decision support. I acknowledge TourPlus AI does not diagnose conditions or guarantee medical outcomes.
+                I consent to the processing of my travel and medical preference data for informational decision support. I acknowledge TourPLUS does not diagnose conditions or guarantee medical outcomes.
               </label>
             </div>
 

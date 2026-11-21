@@ -21,7 +21,10 @@ class TourismEngineTests(TestCase):
         )
         cls.specialty = Specialty.objects.get(slug='cardiology')
         cls.category = TreatmentCategory.objects.get(slug='cabg')
-        cls.offering = HospitalTreatmentOffering.objects.filter(treatment_category=cls.category).first()
+        cls.offering = HospitalTreatmentOffering.objects.filter(
+            treatment_category=cls.category,
+            hospital__city__name__in=['Bengaluru', 'New Delhi', 'Gurugram']
+        ).first()
 
     def test_three_tier_classification_and_clinical_review_boundary(self):
         # Patient with no confirmed clinician guidance

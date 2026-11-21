@@ -88,7 +88,7 @@ export default function FinalPlanDetailPage() {
           <div>
             <div className="flex items-center gap-2 mb-2">
               <span className="text-xs font-bold uppercase tracking-wider text-brand-blue">
-                TourPlus AI Medical Tourism Itinerary
+                TourPLUS Medical Tourism Itinerary
               </span>
               <Badge variant="success">Confirmed Plan</Badge>
             </div>

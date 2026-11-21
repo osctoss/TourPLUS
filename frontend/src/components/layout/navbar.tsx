@@ -8,14 +8,16 @@ export function Navbar() {
     <header className="sticky top-0 z-50 w-full border-b border-border bg-white/95 backdrop-blur">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
         <Link href="/" className="flex items-center gap-2.5">
-          <div className="h-9 w-9 rounded-lg bg-primary flex items-center justify-center text-white font-heading font-bold text-lg shadow-sm">
-            T+
-          </div>
+          <img
+            src="/logo/TourPLUS.svg"
+            alt="TourPLUS Logo"
+            className="h-9 w-9 object-contain rounded"
+          />
           <div className="flex flex-col">
-            <span className="font-heading font-bold text-lg text-primary tracking-tight leading-none">
-              TourPlus <span className="text-green">AI</span>
+            <span className="font-heading font-extrabold text-xl text-primary tracking-tight leading-none">
+              TourPLUS
             </span>
-            <span className="text-[10px] text-muted tracking-wider uppercase">Medical Tourism India</span>
+            <span className="text-[10px] text-muted tracking-wider uppercase font-medium">Medical Tourism India</span>
           </div>
         </Link>
 

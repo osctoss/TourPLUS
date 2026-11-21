@@ -39,7 +39,14 @@ export default function LoginPage() {
     <div className="py-16 sm:py-24 container mx-auto px-4 max-w-md">
       <Card>
         <CardHeader className="text-center space-y-2">
-          <CardTitle className="text-2xl font-bold">Sign In to TourPlus AI</CardTitle>
+          <div className="flex justify-center mb-1">
+            <img
+              src="/logo/TourPLUS.svg"
+              alt="TourPLUS Logo"
+              className="h-12 w-12 object-contain"
+            />
+          </div>
+          <CardTitle className="text-2xl font-bold">Sign In to TourPLUS</CardTitle>
           <CardDescription>
             Access your saved medical scenarios, budget ledgers, and personalized itineraries.
           </CardDescription>

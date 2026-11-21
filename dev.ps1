@@ -1,4 +1,4 @@
-﻿# TourPlus AI — One-Command Full-Stack Runner (PowerShell)
+# TourPlus AI — One-Command Full-Stack Runner (PowerShell)
 # Starts both Django (port 8000) and Next.js (port 3000) concurrently.
 
 $ErrorActionPreference = "Stop"

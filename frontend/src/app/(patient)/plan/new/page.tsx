@@ -483,7 +483,7 @@ export default function NewPlanAssessmentPage() {
             <div className="p-4 bg-slate-50 rounded-lg border border-slate-200 text-sm text-slate-600">
               <div className="font-semibold text-slate-900 mb-1">Transparent Financial Principle:</div>
               <p>
-                TourPlus AI generates a deterministic Decimal budget ledger. The system reserves funds for medical treatment,
+                TourPLUS generates a deterministic Decimal budget ledger. The system reserves funds for medical treatment,
                 return airfare, accredited hotel stay, visas, and local transit. Any excess forms your discretionary budget,
                 and travel package credits are applied dynamically without double-counting.
               </p>
@@ -623,7 +623,7 @@ export default function NewPlanAssessmentPage() {
               className="mt-1 h-4 w-4 rounded border-slate-300 text-brand-blue focus:ring-brand-blue"
             />
             <label htmlFor="consent-check" className="text-xs text-slate-700 leading-relaxed cursor-pointer">
-              I understand and agree that TourPlus AI provides decision-support and planning information only. It is not a
+              I understand and agree that TourPLUS provides decision-support and planning information only. It is not a
               medical provider, and all treatments, medical visas, flights, and accommodations require direct medical
               evaluation and booking confirmation with accredited institutions.
             </label>

@@ -10,7 +10,7 @@ class HealthCheckApiTest(TestCase):
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         data = response.json()
         self.assertEqual(data.get('status'), 'healthy')
-        self.assertEqual(data.get('product'), 'TourPlus AI')
+        self.assertEqual(data.get('product'), 'TourPLUS')
         self.assertEqual(data.get('version'), '1.0.0')
         self.assertEqual(data.get('database'), 'ok')
 

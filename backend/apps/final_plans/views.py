@@ -99,7 +99,7 @@ class FinalPlanViewSet(viewsets.ModelViewSet):
             ],
             'disclaimers': {
                 'medical_safety': (
-                    "TourPlus AI is an informational decision-support and planning platform. "
+                    "TourPLUS is an informational decision-support and planning platform. "
                     "It is NOT a medical provider and does NOT provide medical advice, diagnosis, or treatment. "
                     "All medical treatment must be evaluated and confirmed directly with accredited healthcare professionals."
                 ),

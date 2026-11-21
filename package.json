@@ -1,8 +1,8 @@
 {
-  "name": "tourplus-ai",
+  "name": "tourplus",
   "version": "1.0.0",
   "private": true,
-  "description": "TourPlus AI — Medical Tourism Decision-Support Platform for India",
+  "description": "TourPLUS — Medical Tourism Decision-Support Platform for India",
   "scripts": {
     "dev": "python scripts/dev.py",
     "dev:backend": "backend/.venv/Scripts/python backend/manage.py runserver",

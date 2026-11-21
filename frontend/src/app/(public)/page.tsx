@@ -24,6 +24,13 @@ export default function LandingPage() {
       {/* Hero Section */}
       <section className="relative overflow-hidden bg-gradient-to-b from-blue-light/50 via-white to-surface py-16 sm:py-24 border-b border-border">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-5xl text-center space-y-6">
+          <div className="flex justify-center mb-2">
+            <img
+              src="/logo/TourPLUS.svg"
+              alt="TourPLUS Logo"
+              className="h-16 w-16 object-contain"
+            />
+          </div>
           <Badge variant="success" className="mb-2 py-1 px-3 text-xs uppercase tracking-wider">
             <Sparkles className="w-3.5 h-3.5 mr-1 text-green" />
             Decision-Support Engine for Medical Travel

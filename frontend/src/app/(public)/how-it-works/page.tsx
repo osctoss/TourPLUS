@@ -46,7 +46,7 @@ export default function HowItWorksPage() {
         <div className="text-center space-y-4">
           <Badge variant="info">End-to-End Decision Journey</Badge>
           <h1 className="text-3xl sm:text-4xl font-extrabold text-primary">
-            How TourPlus AI Works
+            How TourPLUS Works
           </h1>
           <p className="text-muted max-w-2xl mx-auto text-sm sm:text-base">
             A step-by-step decision framework connecting healthcare discovery, financial feasibility, recovery safety, and curated travel.

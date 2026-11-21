@@ -25,7 +25,7 @@ def health_check(request):
 
     return Response({
         'status': 'healthy' if db_status == 'ok' else 'degraded',
-        'product': 'TourPlus AI',
+        'product': 'TourPLUS',
         'version': '1.0.0',
         'database': db_status,
     })

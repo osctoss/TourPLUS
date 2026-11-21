@@ -7,7 +7,7 @@ export function MedicalSafetyDisclaimer() {
       <ShieldAlert className="h-5 w-5 text-blue shrink-0 mt-0.5" />
       <div>
         <span className="font-semibold text-primary block mb-0.5">Medical Safety & Advisory Notice</span>
-        TourPlus AI provides informational decision support for medical-tourism planning. It does not diagnose conditions, prescribe treatment or determine whether a patient is fit to travel. Hospital and treatment decisions must be confirmed with qualified healthcare professionals. Recovery and travel restrictions must be discussed with the treating clinician.
+        TourPLUS provides informational decision support for medical-tourism planning. It does not diagnose conditions, prescribe treatment or determine whether a patient is fit to travel. Hospital and treatment decisions must be confirmed with qualified healthcare professionals. Recovery and travel restrictions must be discussed with the treating clinician.
       </div>
     </div>
   );

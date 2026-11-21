@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 """
-TourPlus AI — Concurrent Full-Stack Development Server Runner.
+TourPLUS — Concurrent Full-Stack Development Server Runner.
 Runs both the Django backend (port 8000) and Next.js frontend (port 3000) in one go.
 Handles graceful shutdown of both child processes upon Ctrl+C.
 """
@@ -32,7 +32,7 @@ pkg_manager = pnpm_path if pnpm_path else npm_path
 
 def main():
     print("=" * 65)
-    print("  TourPlus AI — Starting Full-Stack Development Environment")
+    print("  TourPLUS — Starting Full-Stack Development Environment")
     print("=" * 65)
     print(f"  Root Directory : {ROOT_DIR}")
     print(f"  Python Path    : {python_exe}")
@@ -88,7 +88,7 @@ def main():
     print("-" * 65 + "\n")
 
     def cleanup(signum=None, frame=None):
-        print("\n\n[STOP] Shutting down TourPlus AI services...")
+        print("\n\n[STOP] Shutting down TourPLUS services...")
         for name, proc in processes:
             try:
                 print(f"[STOP] Terminating {name} (PID {proc.pid})...")

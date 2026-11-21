@@ -1,5 +1,5 @@
 /**
- * Centralized API Client for TourPlus AI
+ * Centralized API Client for TourPLUS
  * Strictly typed, handles session cookies, standardized error formats.
  */
 
