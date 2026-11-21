@@ -71,3 +71,39 @@ class ProfileUpdateView(views.APIView):
             return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+
+class DemoLoginView(views.APIView):
+    """
+    Seamless 1-click authentication for demo and testing users.
+    Ensures a valid demo patient account exists, authenticates session, and returns user profile.
+    """
+    permission_classes = [permissions.AllowAny]
+
+    def post(self, request):
+        from django.contrib.auth import get_user_model
+        User = get_user_model()
+        user, created = User.objects.get_or_create(
+            email='patient@tourplus.ai',
+            defaults={
+                'role': 'PATIENT',
+                'is_active': True,
+            }
+        )
+        if created or not user.has_usable_password():
+            user.set_password('TourPlus2026!')
+            user.save()
+
+        PatientProfile.objects.get_or_create(
+            user=user,
+            defaults={
+                'full_name': 'John Doe (Demo Patient)',
+                'origin_country_code': 'US',
+                'display_currency': 'USD',
+            }
+        )
+        login(request, user)
+        return Response({
+            'message': 'Demo patient authentication successful.',
+            'user': UserSerializer(user).data
+        })
+

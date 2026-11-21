@@ -22,6 +22,29 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         self.stdout.write(self.style.NOTICE("Beginning idempotent catalogue seeding..."))
 
+        # Demo Patient Account
+        from django.contrib.auth import get_user_model
+        from apps.accounts.models import PatientProfile
+        User = get_user_model()
+        demo_user, _ = User.objects.get_or_create(
+            email='patient@tourplus.ai',
+            defaults={
+                'role': 'PATIENT',
+                'is_active': True,
+            }
+        )
+        if not demo_user.has_usable_password():
+            demo_user.set_password('TourPlus2026!')
+            demo_user.save()
+        PatientProfile.objects.get_or_create(
+            user=demo_user,
+            defaults={
+                'full_name': 'John Doe (Demo Patient)',
+                'origin_country_code': 'US',
+                'display_currency': 'USD',
+            }
+        )
+
         # 1. Countries
         india, _ = Country.objects.update_or_create(
             iso2='IN',

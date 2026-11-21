@@ -1,8 +1,11 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { apiClient } from "@/lib/api-client";
+import { useAuth } from "@/app/providers";
+import { ShieldAlert, UserCheck } from "lucide-react";
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -68,8 +71,10 @@ const DEFAULT_CATEGORIES: Category[] = [
 
 export default function NewPlanAssessmentPage() {
   const router = useRouter();
+  const { user, refreshUser } = useAuth();
   const [currentStep, setCurrentStep] = useState(1);
   const [loading, setLoading] = useState(false);
+  const [isAuthenticating, setIsAuthenticating] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
   // Catalogue data
@@ -197,6 +202,19 @@ export default function NewPlanAssessmentPage() {
     setCurrentStep((prev) => Math.max(1, prev - 1));
   };
 
+  const handleDemoLogin = async () => {
+    setIsAuthenticating(true);
+    setError(null);
+    try {
+      await apiClient.post("/auth/demo/");
+      await refreshUser();
+    } catch {
+      setError("Failed to authenticate demo patient session. Please sign in or register.");
+    } finally {
+      setIsAuthenticating(false);
+    }
+  };
+
   const handleSubmitAndGenerate = async () => {
     if (!disclaimerConfirmed) {
       setError("You must acknowledge the Medical Safety and Planning Disclaimers before generating a plan.");
@@ -207,6 +225,19 @@ export default function NewPlanAssessmentPage() {
     setError(null);
 
     try {
+      // If user is not authenticated, automatically log them into the demo session
+      // so plan generation completes seamlessly without failing on 401
+      if (!user) {
+        try {
+          await apiClient.post("/auth/demo/");
+          await refreshUser();
+        } catch {
+          setError("Please sign in or create an account to generate and save your plan.");
+          setLoading(false);
+          return;
+        }
+      }
+
       // 1. Create Trip Request with nested interests
       const interestsInput = Object.entries(selectedInterests).map(([catId, weight]) => ({
         destination_category: catId,
@@ -231,7 +262,7 @@ export default function NewPlanAssessmentPage() {
 
       const tripRequest = await apiClient.post<any>("/trip-requests/", tripPayload);
 
-      // 2. Generate Plan Orchestration
+      // 2. Generate Plan Orchestration (runs all 4 engines)
       await apiClient.post<any>(`/trip-requests/${tripRequest.id}/generate-plan/`);
 
       // 3. Route to Scenario Comparison Results
@@ -243,7 +274,7 @@ export default function NewPlanAssessmentPage() {
   };
 
   return (
-    <div className="max-w-4xl mx-auto px-4 py-8">
+    <div className="max-w-4xl mx-auto px-4 pt-8 pb-24">
       {/* Wizard Progress Bar */}
       <div className="mb-8">
         <div className="flex items-center justify-between text-xs font-semibold text-slate-500 uppercase tracking-wider mb-2">
@@ -664,6 +695,50 @@ export default function NewPlanAssessmentPage() {
             </CardContent>
           </Card>
 
+          {/* Account Status on Step 6 */}
+          {user ? (
+            <div className="p-3 bg-green-mint/60 border border-green/30 rounded-lg flex items-center justify-between text-xs text-green-dark">
+              <span className="flex items-center gap-1.5 font-medium">
+                <UserCheck className="w-4 h-4 text-green" />
+                Signed in as {user.email}
+              </span>
+              <span>Ready to calculate & save scenarios</span>
+            </div>
+          ) : (
+            <div className="p-4 bg-blue-light/50 border border-blue/30 rounded-xl space-y-3">
+              <div className="flex items-start gap-2.5">
+                <ShieldAlert className="w-5 h-5 text-blue shrink-0 mt-0.5" />
+                <div>
+                  <h4 className="font-semibold text-primary text-sm">Account Status: Guest / Unsigned</h4>
+                  <p className="text-xs text-muted mt-0.5 leading-relaxed">
+                    TourPLUS generates private hospital scenarios and financial ledgers linked to a patient account. Continue instantly as demo patient or sign in to save permanently.
+                  </p>
+                </div>
+              </div>
+              <div className="flex flex-wrap gap-2 pt-1 pl-7">
+                <Button
+                  type="button"
+                  variant="green"
+                  size="sm"
+                  onClick={handleDemoLogin}
+                  isLoading={isAuthenticating}
+                >
+                  1-Click Continue as Demo Patient
+                </Button>
+                <Link href="/login">
+                  <Button type="button" variant="outline" size="sm">
+                    Sign In
+                  </Button>
+                </Link>
+                <Link href="/register">
+                  <Button type="button" variant="outline" size="sm">
+                    Create Free Account
+                  </Button>
+                </Link>
+              </div>
+            </div>
+          )}
+
           {/* Mandatory Disclaimers */}
           <div className="space-y-4">
             <MedicalSafetyDisclaimer />
@@ -687,6 +762,13 @@ export default function NewPlanAssessmentPage() {
         </div>
       )}
 
+      {/* Visible Error Notification directly above buttons */}
+      {error && (
+        <Alert variant="danger" title="Notice" className="mt-6">
+          {error}
+        </Alert>
+      )}
+
       {/* Navigation Buttons */}
       <div className="mt-8 flex justify-between items-center">
         {currentStep > 1 ? (
@@ -701,9 +783,12 @@ export default function NewPlanAssessmentPage() {
           <Button onClick={handleNext}>Next Step</Button>
         ) : (
           <Button
+            variant="green"
+            size="lg"
             onClick={handleSubmitAndGenerate}
             disabled={!disclaimerConfirmed || loading}
-            className="bg-brand-blue text-white hover:bg-brand-primary"
+            isLoading={loading}
+            className="shadow-md"
           >
             {loading ? "Generating Recommendation Scenarios..." : "Generate Decision-Support Plan"}
           </Button>
